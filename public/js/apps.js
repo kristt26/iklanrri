@@ -5,7 +5,8 @@ angular.module('apps', [
         'auth.service',
         'naif.base64',
         'swangular',
-        'message.service'
+        'message.service',
+        'ngLocale'
 
     ])
     .controller('indexController', indexController);

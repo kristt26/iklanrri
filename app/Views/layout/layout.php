@@ -19,6 +19,9 @@
     <link rel="stylesheet" href="../../plugins/bs-stepper/css/bs-stepper.min.css">
     <link rel="stylesheet" href="../../plugins/dropzone/min/dropzone.min.css">
     <link rel="stylesheet" href="../../dist/css/adminlte.min.css">
+    <script type="text/javascript" src="https://app.sandbox.midtrans.com/snap/snap.js"
+        data-client-key="SB-Mid-client-fs8aESL27KVF4nQ-"></script>
+    <script src="../../plugins/jquery/jquery.min.js"></script>
 </head>
 
 <body class="hold-transition sidebar-mini navbar-fixed">
@@ -30,12 +33,12 @@
                 <div class="container-fluid">
                     <div class="row mb-2">
                         <div class="col-sm-6">
-                            <h1>Advanced Form</h1>
+                            <h1><?=$datamenu['menu']?></h1>
                         </div>
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
-                                <li class="breadcrumb-item"><a href="#">Home</a></li>
-                                <li class="breadcrumb-item active">Advanced Form</li>
+                                <li class="breadcrumb-item"><a href="<?=base_url('admin/home')?>">Home</a></li>
+                                <li class="breadcrumb-item active"><?=$datamenu['menu']?></li>
                             </ol>
                         </div>
                     </div>
@@ -57,7 +60,7 @@
         <aside class="control-sidebar control-sidebar-dark">
         </aside>
     </div>
-    <script src="../../plugins/jquery/jquery.min.js"></script>
+
     <script src="../../libs/angular/angular.min.js"></script>
     <script src="../../js/apps.js"></script>
     <script src="../../js/services/helper.services.js"></script>
@@ -90,8 +93,8 @@
     <script src="../../dist/js/demo.js"></script>
     <script src="../../dist/js/script.js"></script>
     <script src="../../libs/loading/dist/loadingoverlay.min.js"></script>
-    
-    
+
+
 </body>
 
 </html>

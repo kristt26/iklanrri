@@ -6,6 +6,7 @@ use CodeIgniter\Model;
 
 class UserModel extends Model
 {
+    protected $table = 'user';
     protected $encrypter;
     protected $db;
     public function __construct()
@@ -90,6 +91,13 @@ class UserModel extends Model
         return $builder->countAllResults();
     }
 
+    public function readData($id)
+    {
+        $builder = $this->db->table('user');
+        $builder->where('login_oauth_uid', $id);
+        return $builder->get()->getRowArray();
+    }
+
     public function updateUserGoogle($data, $id)
     {
         $this->db->table('user')->update($data, ['login_oauth_uid'=>$id]);
@@ -107,7 +115,7 @@ class UserModel extends Model
         $this->db->table('userinrole')->insert($userinrole);
         if($this->db->transStatus()){
             $this->db->transCommit();
-            return true;
+            return $userid;
         }else{
             $this->db->transRollback();
             return false;

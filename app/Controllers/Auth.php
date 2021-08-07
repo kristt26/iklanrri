@@ -64,11 +64,13 @@ class Auth extends ResourceController
                         'email'  => $data['email'],
                         'profile_picture' => $data['picture']
                     );
-                    $this->userModel->insertUserGoogle($user_data);
+                    $userid = $this->userModel->insertUserGoogle($user_data);
                 }
+                $user_data = $this->userModel->readData($data['id']);
                 $user_data['logged_in']= true;
+                $user_data['role']= "Pemesan";
                 $this->session->set($user_data);
-                return redirect()->to(base_url("admin/home"));
+                return redirect()->to(base_url("home"));
             }
         }
         if (!$this->session->set('access_token')) {

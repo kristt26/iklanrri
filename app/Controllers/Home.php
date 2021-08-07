@@ -1,4 +1,4 @@
-<?php namespace App\Controllers\Admin;
+<?php namespace App\Controllers;
 use App\Controllers\BaseController;
 class Home extends BaseController
 {

@@ -15,8 +15,9 @@
         </div>
         <nav class="mt-2">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-            <li class="nav-item">
-                    <a href="../widgets.html" class="nav-link">
+                <?php if(session()->get('role')=="Admin"):?>
+                <li class="nav-item">
+                    <a href="<?=base_url('admin/Home')?>" class="nav-link">
                         <i class="nav-icon fas fa-home"></i>
                         <p>
                             Dashboard
@@ -27,21 +28,21 @@
                     <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-tachometer-alt"></i>
                         <p>
-                            Dashboard
+                            Master Data
                             <i class="right fas fa-angle-left"></i>
                         </p>
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="../../index.html" class="nav-link">
+                            <a href="<?=base_url('admin/layanan')?>" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
-                                <p>Dashboard v1</p>
+                                <p>Layanan</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="../../index2.html" class="nav-link">
+                            <a href="<?=base_url('admin/tarif')?>" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
-                                <p>Dashboard v2</p>
+                                <p>Tarif</p>
                             </a>
                         </li>
                         <li class="nav-item">
@@ -52,6 +53,28 @@
                         </li>
                     </ul>
                 </li>
+                <?php endif; ?>
+
+                <!-- Menu Pemesan -->
+
+                <?php if(session()->get('role')=="Pemesan"):?>
+                <li class="nav-item">
+                    <a href="<?=base_url('home')?>" class="nav-link">
+                        <i class="nav-icon fas fa-home"></i>
+                        <p>
+                            Dashboard
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="<?=base_url('iklan')?>" class="nav-link">
+                        <i class="nav-icon fas fa-bookmark"></i>
+                        <p>
+                            Pasang Iklan
+                        </p>
+                    </a>
+                </li>
+                <?php endif; ?>
             </ul>
         </nav>
         <hr style="background-color: #666d75;">

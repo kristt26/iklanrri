@@ -66,7 +66,7 @@
                 if (res.data.role == 'Admin')
                     document.location.href = helperServices.url + 'admin/home';
                 else
-                    alert("Gagal");
+                    document.location.href = helperServices.url + 'pemesan/home';
                     // document.location.href = helperServices.url;
             }, err => {
                 $scope.error = true;
