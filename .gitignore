@@ -98,6 +98,7 @@ _modules/*
 # Jetbrains editors (PHPStorm, etc)
 .idea/
 *.iml
+*.composer.lock
 
 # Netbeans
 nbproject/
