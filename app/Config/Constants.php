@@ -80,3 +80,5 @@ defined('EXIT__AUTO_MAX')      || define('EXIT__AUTO_MAX', 125); // highest auto
 
 $protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off' ? 'https://'.$_SERVER['HTTP_HOST'] : 'http://'.$_SERVER['HTTP_HOST'];
 defined('BASE') || define('BASE',$protocol);
+$tokenJwt ="g0IP5d1qRZcKZf2zohJalN6kgajBOydmxNOhwZaLKNo";
+defined('TOKENJWT') || define('TOKENJWT',$tokenJwt);

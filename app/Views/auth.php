@@ -15,7 +15,7 @@
         <div class="form">
             <form class="register-form" ng-submit="save()">
                 <h2>Registered</h2>
-                <input type="text" placeholder="Nama Pengguna" ng-model="model.nama" required />
+                <input type="text" placeholder="Nama Pengguna" ng-model="model.fullname" required />
                 <input type="text" placeholder="username" ng-model="model.username" required />
                 <input type="password" placeholder="password" ng-model="model.password" required />
                 <input type="text" placeholder="email address" ng-model="model.email" required />
@@ -53,6 +53,9 @@
                 opacity: "toggle"
             }, "slow");
         });
+        if('<?=session()->getFlashdata('pesan')?>'){
+            message.info('<?=session()->getFlashdata('pesan')?>');
+        }
         $scope.model = {};
         $scope.error = false
         $scope.model.username = 'Administrator';
@@ -66,7 +69,7 @@
                 if (res.data.role == 'Admin')
                     document.location.href = helperServices.url + 'admin/home';
                 else
-                    document.location.href = helperServices.url + 'pemesan/home';
+                    document.location.href = helperServices.url + 'home';
                     // document.location.href = helperServices.url;
             }, err => {
                 $scope.error = true;
@@ -77,17 +80,15 @@
             message.dialogmessage('Anda Yakin?', 'Ya', 'Tidak').then(x => {
                 $http({
                     method: "post",
-                    url: "<?=base_url('admin/users/post')?>",
+                    url: "<?=base_url('auth/register')?>",
                     data: $scope.model
                 }).then(res => {
                     if (res.data){
-                        message.confirm("Berhasil Menyimpan Data", "Ok").then(x => {
-                            document.location.href = helperServices.url + "authentication";
-                        });
+                        message.info("Silahkan periksa email anda untuk confirmasi account", "Ok");
                     }
                         
                 }, err => {
-                    alert(err.data);
+                    message.error(err.data.messages.message, "Ok");
                 })
             })
 

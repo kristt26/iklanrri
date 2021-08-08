@@ -10,7 +10,7 @@
                 <img src="../../dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
             </div>
             <div class="info">
-                <a href="#" class="d-block">Alexander Pierce</a>
+                <a href="<?=base_url('profile')?>" class="d-block">Alexander Pierce</a>
             </div>
         </div>
         <nav class="mt-2">

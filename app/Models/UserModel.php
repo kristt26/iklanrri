@@ -7,6 +7,7 @@ use CodeIgniter\Model;
 class UserModel extends Model
 {
     protected $table = 'user';
+    protected $allowedFields = ['id', 'username', 'password', 'email', 'login_oauth_uid', 'first_name', 'last_name', 'profile_picture', 'fullname', 'status', 'alamat', 'kontak'];
     protected $encrypter;
     protected $db;
     public function __construct()
@@ -17,10 +18,6 @@ class UserModel extends Model
     
     public function check()
     {
-        $plainText = 'Admin@123';
-        $ciphertext = $this->encrypter->encrypt($plainText);
-        $hasil =  $this->encrypter->decrypt($ciphertext);
-        
         if($this->db->table('user')->countAllResults(false) == 0){
             $this->db->transBegin();
             $user = [
@@ -62,16 +59,23 @@ class UserModel extends Model
     {
         $username = $data['username'];
         $result = $this->db->query("SELECT
-                `user`.`id`,
-                `user`.`username`,
-                `user`.`password`,
-                `user`.`email`,
-                `userinrole`.`roleid`,
-                `role`.`role`
-            FROM
-                `user`
-                LEFT JOIN `userinrole` ON `userinrole`.`userid` = `user`.`id`
-                LEFT JOIN `role` ON `role`.`id` = `userinrole`.`roleid` WHERE username='$username'")->getRowArray();
+            `user`.`id`,
+            `user`.`username`,
+            `user`.`password`,
+            `user`.`email`,
+            `user`.`login_oauth_uid`,
+            `user`.`first_name`,
+            `user`.`last_name`,
+            `user`.`profile_picture`,
+            `user`.`created_at`,
+            `user`.`updated_at`,
+            `user`.`fullname`,
+            `user`.`status`,
+            `role`.`role`
+        FROM
+            `user`
+            LEFT JOIN `userinrole` ON `userinrole`.`userid` = `user`.`id`
+            LEFT JOIN `role` ON `role`.`id` = `userinrole`.`roleid` WHERE username='$username'")->getRowArray();
         if($result){
             $p = $this->encrypter->decrypt(base64_decode($result['password']));
             if($p==$data['password']){
@@ -100,9 +104,9 @@ class UserModel extends Model
 
     public function updateUserGoogle($data, $id)
     {
-        $this->db->table('user')->update($data, ['login_oauth_uid'=>$id]);
+        $this->db->table('user')->update($data, ['id'=>$id]);
     }
-    public function insertUserGoogle($data)
+    public function insertUser($data)
     {
         $this->db->transBegin();
         $role = $this->db->table('role')->where('role', 'Pemesan')->get()->getRowArray();

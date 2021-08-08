@@ -39,6 +39,7 @@ $routes->get('/admin/layanan', 'admin/Layanan::index',['filter' => 'auth']);
 $routes->get('/admin/tarif', 'admin/Tarif::index',['filter' => 'auth']);
 $routes->get('/home', 'Home::index',['filter' => 'auth']);
 $routes->get('/iklan', 'Iklan::index',['filter' => 'auth']);
+$routes->get('/profile', 'Profile::index',['filter' => 'auth']);
 
 
 /*

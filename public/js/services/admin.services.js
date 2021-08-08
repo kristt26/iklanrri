@@ -3,6 +3,7 @@ angular.module('admin.service', [])
     .factory('layananServices', layananServices)
     .factory('tarifServices', tarifServices)
     .factory('pasangIklanServices', pasangIklanServices)
+    .factory('profileServices', profileServices)
     ;
 
 
@@ -145,8 +146,8 @@ function layananServices($http, $q, helperServices, AuthService, message) {
             headers: AuthService.getHeader()
         }).then(
             (res) => {
-                var data = service.data.find(x=>x.id == params.id);
-                if(data){
+                var data = service.data.find(x => x.id == params.id);
+                if (data) {
                     data.layanan = params.layanan;
                     data.status = params.status;
                 }
@@ -220,9 +221,14 @@ function tarifServices($http, $q, helperServices, AuthService, message) {
             headers: AuthService.getHeader()
         }).then(
             (res) => {
-                var data = service.data.find(x=>x.kategori==res.data.kategori);
-                if(data)
-                    data.tarif.push(res.data);
+                var data = service.data.find(x => x.id == res.data.layananid);
+                if (data) {
+                    var item = data.kategori.find(x => x.kategori == res.data.kategori);
+                    if (item) {
+                        item.tarif.push(res.data);
+                    }
+
+                }
                 def.resolve(res.data);
             },
             (err) => {
@@ -242,8 +248,8 @@ function tarifServices($http, $q, helperServices, AuthService, message) {
             headers: AuthService.getHeader()
         }).then(
             (res) => {
-                var data = service.data.find(x=>x.id == params.id);
-                if(data){
+                var data = service.data.find(x => x.id == params.id);
+                if (data) {
                     data.layanan = params.layanan;
                     data.status = params.status;
                 }
@@ -286,7 +292,7 @@ function pasangIklanServices($http, $q, helperServices, AuthService, message) {
         post: post,
         put: put,
         deleted: deleted,
-        cekStatus:cekStatus
+        cekStatus: cekStatus
     };
 
     function get() {
@@ -317,9 +323,7 @@ function pasangIklanServices($http, $q, helperServices, AuthService, message) {
             headers: AuthService.getHeader()
         }).then(
             (res) => {
-                var data = service.data.find(x=>x.kategori==res.data.kategori);
-                if(data)
-                    data.tarif.push(res.data);
+                service.data.push(res.data.iklan);
                 def.resolve(res.data.token);
             },
             (err) => {
@@ -339,8 +343,8 @@ function pasangIklanServices($http, $q, helperServices, AuthService, message) {
             headers: AuthService.getHeader()
         }).then(
             (res) => {
-                var data = service.data.find(x=>x.id == params.id);
-                if(data){
+                var data = service.data.find(x => x.id == params.id);
+                if (data) {
                     data.layanan = params.layanan;
                     data.status = params.status;
                 }
@@ -383,11 +387,62 @@ function pasangIklanServices($http, $q, helperServices, AuthService, message) {
             headers: AuthService.getHeader()
         }).then(
             (res) => {
-                var data = service.data.find(x=>x.id == params.id);
-                if(data){
+                var data = service.data.find(x => x.id == params.id);
+                if (data) {
                     data.layanan = params.layanan;
                     data.status = params.status;
                 }
+                def.resolve(res.data);
+            },
+            (err) => {
+                def.reject(err);
+                message.info(err.data);
+            }
+        );
+        return def.promise;
+    }
+}
+
+function profileServices($http, $q, helperServices, AuthService, message) {
+    var controller = helperServices.url + 'profile/';
+    var service = {};
+    service.data = [];
+    return {
+        get: get,
+        put: put,
+    };
+
+    function get() {
+        var def = $q.defer();
+        $http({
+            method: 'get',
+            url: controller + 'read',
+            headers: AuthService.getHeader()
+        }).then(
+            (res) => {
+                service.data = res.data;
+                def.resolve(res.data);
+            },
+            (err) => {
+                def.reject(err.data);
+                message.info(err.data);
+            }
+        );
+        return def.promise;
+    }
+
+    function put(params) {
+        var def = $q.defer();
+        $http({
+            method: 'put',
+            url: controller + 'update',
+            data: params,
+            headers: AuthService.getHeader()
+        }).then(
+            (res) => {
+                service.data.fullname = params.fullname;
+                service.data.kontak = params.kontak;
+                service.data.alamat = params.alamat;
                 def.resolve(res.data);
             },
             (err) => {

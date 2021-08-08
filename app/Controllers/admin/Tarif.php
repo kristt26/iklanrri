@@ -5,15 +5,18 @@ namespace App\Controllers\Admin;
 use CodeIgniter\API\ResponseTrait;
 use App\Controllers\BaseController;
 use App\Models\TarifModel;
+use App\Models\LayananModel;
 
 class Tarif extends BaseController
 {
     use ResponseTrait;
     public $tarif;
+    public $layanan;
 
     public function __construct()
     {
         $this->tarif = new TarifModel();
+        $this->layanan = new LayananModel();
     }
 
 
@@ -39,15 +42,22 @@ class Tarif extends BaseController
         if ($id) {
             return $this->respond($this->tarif->where('id', $id)->first());
         } else {
+            $layanans = $this->layanan->get()->getResultArray();
             $data = [['kategori'=>"Non Komersial"], ['kategori'=>"Komersial"]];
             $newArray = [];
-            foreach ($data as $key => $value) {
-                $item = [
-                    'id'=>$key,
-                    'kategori'=>$value['kategori'],
-                    'tarif'=> $this->tarif->where('kategori', $value['kategori'])->get()->getResultArray()
-                ];
-                array_push($newArray, $item);
+            foreach ($layanans as $key => $layanan) {
+                foreach ($data as $key => $kategoti) {
+                    $layanan['kategori'] = [];
+                    foreach ($data as $key => $value) {
+                        $item = [
+                            'id'=>$key+1,
+                            'kategori'=>$value['kategori'],
+                            'tarif'=> $this->tarif->where(['layananid'=>$layanan['id'], 'kategori'=>$value['kategori']])->get()->getResultArray()
+                        ];
+                        array_push($layanan['kategori'], $item);
+                    }
+                }
+                array_push($newArray, $layanan);
             }
             return $this->respond($newArray);
         }
