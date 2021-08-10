@@ -6,7 +6,8 @@ angular.module('apps', [
         'naif.base64',
         'swangular',
         'message.service',
-        'ngLocale'
+        'ngLocale',
+        'datatables.directive'
 
     ])
     .controller('indexController', indexController);

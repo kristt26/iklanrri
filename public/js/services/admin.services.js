@@ -4,6 +4,7 @@ angular.module('admin.service', [])
     .factory('tarifServices', tarifServices)
     .factory('pasangIklanServices', pasangIklanServices)
     .factory('profileServices', profileServices)
+    .factory('userServices', userServices)
     ;
 
 
@@ -292,7 +293,8 @@ function pasangIklanServices($http, $q, helperServices, AuthService, message) {
         post: post,
         put: put,
         deleted: deleted,
-        cekStatus: cekStatus
+        cekStatus: cekStatus,
+        getJadwal: getJadwal
     };
 
     function get() {
@@ -401,6 +403,25 @@ function pasangIklanServices($http, $q, helperServices, AuthService, message) {
         );
         return def.promise;
     }
+
+    function getJadwal(params) {
+        var def = $q.defer();
+        $http({
+            method: 'post',
+            url: controller + 'jumlahsiaran',
+            data: params,
+            headers: AuthService.getHeader()
+        }).then(
+            (res) => {
+                def.resolve(res.data);
+            },
+            (err) => {
+                def.reject(err.data);
+                message.info(err.data);
+            }
+        );
+        return def.promise;
+    }
 }
 
 function profileServices($http, $q, helperServices, AuthService, message) {
@@ -452,4 +473,71 @@ function profileServices($http, $q, helperServices, AuthService, message) {
         );
         return def.promise;
     }
+}
+
+function userServices($http, $q, helperServices, AuthService, message) {
+    var controller = helperServices.url + 'admin/users/';
+    var service = {};
+    service.data = [];
+    return {
+        get: get
+    };
+
+    function get() {
+        var def = $q.defer();
+        $http({
+            method: 'get',
+            url: controller + 'read',
+            headers: AuthService.getHeader()
+        }).then(
+            (res) => {
+                service.data = res.data;
+                def.resolve(res.data);
+            },
+            (err) => {
+                def.reject(err.data);
+                message.info(err.data);
+            }
+        );
+        return def.promise;
+    }
+
+    // function post(params) {
+    //     var def = $q.defer();
+    //     $http({
+    //         method: 'put',
+    //         url: controller + 'create',
+    //         data: params,
+    //         headers: AuthService.getHeader()
+    //     }).then(
+    //         (res) => {
+    //             service.data = res.data;
+    //             def.resolve(res.data);
+    //         },
+    //         (err) => {
+    //             def.reject(err);
+    //             message.info(err.data);
+    //         }
+    //     );
+    //     return def.promise;
+    // }
+
+    // function put(params) {
+    //     var def = $q.defer();
+    //     $http({
+    //         method: 'put',
+    //         url: controller + 'update',
+    //         data: params,
+    //         headers: AuthService.getHeader()
+    //     }).then(
+    //         (res) => {
+    //             def.resolve(res.data);
+    //         },
+    //         (err) => {
+    //             def.reject(err);
+    //             message.info(err.data);
+    //         }
+    //     );
+    //     return def.promise;
+    // }
 }

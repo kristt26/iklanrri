@@ -32,19 +32,33 @@ class UserModel extends Model
             ];
             $this->db->table('role')->insert($role);
             $roleid = $this->db->insertID();
-
             $roleuser = [
                 'userid'=>$userid,
                 'roleid'=>$roleid
             ];
             $this->db->table('userinrole')->insert($roleuser);
 
-            $petugas = [
-                'nama'=>"Administrator",
-                'jabatan'=>"Administrator",
-                'userid'=>$userid
+            $user = [
+                "username"=>"Siaran",
+                "password"=> base64_encode($this->encrypter->encrypt("Admin@123")),
+                "email"=>"siaran@mail.com"
             ];
-            $this->db->table('petugas')->insert($petugas);
+            $this->db->table('user')->insert($user);
+            $userid = $this->db->insertID();
+            $role = [
+                    "role"=>"Siaran"
+            ];
+            $this->db->table('role')->insert($role);
+            $roleid = $this->db->insertID();
+            $roleuser = [
+                'userid'=>$userid,
+                'roleid'=>$roleid
+            ];
+            $this->db->table('userinrole')->insert($roleuser);
+            $role = [
+                "role"=>"Pemesan"
+            ];
+            $this->db->table('role')->insert($role);
             if($this->db->transStatus()=== false){
                 $this->db->transRollback();
                 return true;

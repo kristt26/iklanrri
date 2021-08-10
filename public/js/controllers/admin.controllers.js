@@ -5,6 +5,7 @@ angular.module('adminctrl', [])
     .controller('tarifController', tarifController)
     .controller('pasangIklanController', pasangIklanController)
     .controller('profileController', profileController)
+    .controller('UserController', UserController)
     ;
 
 function pageController($scope, helperServices) {
@@ -214,17 +215,38 @@ function pasangIklanController($scope, $http, helperServices, pasangIklanService
     $scope.cekFile = (item) => {
         console.log(item);
     }
-    $scope.lanjut = () => {
+    $scope.lanjut = (set) => {
         var itemharga = $scope.cekHarga($scope.model);
-        $scope.tarif.durasi = itemharga.durasi;
-        $scope.tarif.harga = itemharga.harga;
-        $scope.model.idorder = Date.now();
-        $scope.model.tarifid = itemharga.itemharga.id;
-        $scope.model.biaya = (itemharga.harga * (itemharga.durasi * $scope.model.waktu.length)) + ((itemharga.harga * (itemharga.durasi * $scope.model.waktu.length)) * 0.1);
-        console.log($scope.model);
-        console.log($scope.tarif);
-        $("#tarifId").modal("hide");
-        $("#invoice").modal("show");
+        if(set=='Info'){
+            if(itemharga){
+                var param = angular.copy($scope.model);
+                param.tanggalmulai = param.tanggalmulai.getFullYear() + "-" + (param.tanggalmulai.getMonth() + 1) + "-" + param.tanggalmulai.getDate();
+                param.tanggalselesai = param.tanggalselesai.getFullYear() + "-" + (param.tanggalselesai.getMonth() + 1) + "-" + param.tanggalselesai.getDate();
+                pasangIklanServices.getJadwal(param).then(res=>{
+                    $scope.jadwals = $scope.grouptanggal(res);
+                    $scope.tarif.panjang = res.length;
+                    $scope.tarif.durasi = itemharga.durasi;
+                    $scope.tarif.harga = itemharga.harga;
+                    $scope.model.idorder = Date.now();
+                    $scope.model.tarifid = itemharga.itemharga.id;
+                    $scope.model.biaya = (itemharga.harga * ($scope.tarif.panjang)) + ((itemharga.harga * ($scope.tarif.panjang)) * 0.1);
+                    console.log($scope.model);
+                    console.log($scope.tarif);
+                    if(res.length>0){
+                        $("#tarifId").modal("hide");
+                        $("#jadwalInfo").modal("show");
+                    }else{
+                        message.info("Jadwal Siaran Penuh Silahkan Pilih Tanggal Lain");
+                        $("#jadwalInfo").modal("hide");
+                        $("#tarifId").modal('show');
+                    }
+                    
+                })
+            }
+        }else{
+            $("#jadwalInfo").modal("hide");
+            $("#invoice").modal("show");
+        }
     }
 
     $scope.cekHarga = (model) => {
@@ -290,5 +312,28 @@ function profileController($scope, $http, helperServices, profileServices, messa
             })
         })
     }
+}
+
+function UserController($scope, $http, helperServices, userServices, message) {
+    $scope.$emit("SendUp", "Layanan");
+    $scope.datas = [];
+    $scope.model = {};
+    userServices.get().then(res => {
+        $scope.datas = res;
+        console.log(res);
+    })
+    // $scope.edit = () => {
+    //     $scope.model = angular.copy($scope.datas);
+    //     $("#editProfile").modal('show');
+    // }
+    // $scope.save = (param) => {
+    //     message.dialog("Anda yakin ???", "Ya", "Tidak").then(x => {
+    //         profileServices.put(param).then(res => {
+    //             message.info("Berhasil");
+    //             $("#editProfile").modal('hide');
+    //             $scope.model = {};
+    //         })
+    //     })
+    // }
 }
 

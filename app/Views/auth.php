@@ -46,7 +46,7 @@
         ])
         .controller('userLogin', userLogin);
 
-    function userLogin($scope, $http, helperServices,message) {
+    function userLogin($scope, $http, helperServices, message) {
         $(".message a").click(function() {
             $("form").animate({
                 height: "toggle",
@@ -68,6 +68,8 @@
             }).then(res => {
                 if (res.data.role == 'Admin')
                     document.location.href = helperServices.url + 'admin/home';
+                else if(res.data.role == 'Siaran')
+                    document.location.href = helperServices.url + 'siaran/home';
                 else
                     document.location.href = helperServices.url + 'home';
                     // document.location.href = helperServices.url;

@@ -217,8 +217,8 @@ class Iklan extends BaseController
             $newArray = [];
             while (strtotime($dari) <= strtotime($sampai)) {
                 foreach ($datawaktu as $key => $waktu) {
+                    $new_array = [];
                     foreach ($dataLayanan as $key => $itemLayanan) {
-                        $new_array = [];
                         foreach ($siaran as $key => $value) {
                             $time = strtotime($dari);
                             $tanggal = date('Y-m-d', $time);
@@ -226,21 +226,70 @@ class Iklan extends BaseController
                                 array_push($new_array, $value);
                             }
                         }
-                        if (count($new_array) < 5) {
-                            $item = [
-                                'iklanid' => $data['id'],
-                                'tanggal' => $dari,
-                                'waktu' => $waktu,
-                            ];
-                        }
                     }
-                    array_push($newArray, $item);
+                    if (count($new_array) < 5) {
+                        $item = [
+                            'iklanid' => $data['id'],
+                            'tanggal' => $dari,
+                            'waktu' => $waktu,
+                        ];
+                        array_push($newArray, $item);
+                    }
                 }
 
                 // echo "$dari<br/>";
                 $dari = date("Y-m-d", strtotime("+1 day", strtotime($dari)));
             }
             $jadwal->insertBatch($newArray);
+        } catch (\Throwable $th) {
+            return $this->respond(['message' => $th->getMessage()]);
+        }
+    }
+
+    public function jumlahsiaran()
+    {
+        $data = (array)$this->request->getJSON();
+        try {
+            $jadwal = new \App\Models\JadwalModel();
+            $layanan = new \App\Models\LayananModel();
+            $dataLayanan = $layanan->get()->getResultArray();
+            $dari = $data['tanggalmulai'];
+            $sampai = $data['tanggalselesai'];
+            $datawaktu = $data['waktu'];
+            $siaran = $jadwal->query("SELECT
+                `jadwalsiaran`.*,
+                `layanan`.`layanan`,
+                `layanan`.`id` AS `layananid`
+            FROM
+                `jadwalsiaran`
+                LEFT JOIN `iklan` ON `iklan`.`id` = `jadwalsiaran`.`iklanid`
+                LEFT JOIN `tarif` ON `tarif`.`id` = `iklan`.`tarifid`
+                LEFT JOIN `layanan` ON `layanan`.`id` = `tarif`.`layananid` WHERE jadwalsiaran.tanggal >= '$dari' AND jadwalsiaran.tanggal <= '$sampai'")->getResultArray();
+            $newArray = [];
+            while (strtotime($dari) <= strtotime($sampai)) {
+                foreach ($datawaktu as $key => $waktu) {
+                    $new_array = [];
+                    foreach ($dataLayanan as $key => $itemLayanan) {
+                        foreach ($siaran as $key => $value) {
+                            $time = strtotime($dari);
+                            $tanggal = date('Y-m-d', $time);
+                            if ($value['tanggal'] == $tanggal && $value['waktu'] == $waktu && $value['layananid'] == $itemLayanan['id']) {
+                                array_push($new_array, $value);
+                            }
+                        }
+                    }
+                    if (count($new_array) < 5) {
+                        $item = [
+                            'tanggal' => $dari,
+                            'waktu' => $waktu,
+                        ];
+                        array_push($newArray, $item);
+                    }
+                }
+                $dari = date("Y-m-d", strtotime("+1 day", strtotime($dari)));
+            }
+            // $jadwal->insertBatch($newArray);
+            return $this->respond($newArray);
         } catch (\Throwable $th) {
             return $this->respond(['message' => $th->getMessage()]);
         }

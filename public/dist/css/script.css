@@ -1,0 +1,57 @@
+.card-rri:not(.card-outline)>.card-header {
+    background-color: #00a8e6;
+}
+
+.card-rri:not(.card-outline)>.card-header, .card-rri:not(.card-outline)>.card-header a {
+    color: #fff;
+}
+
+.card-rri:not(.card-outline)>.card-header a.active {
+    color: #1f2d3d;
+}
+
+.card-rri.card-outline {
+    border-top: 3px solid #00a8e6;
+}
+
+.card-rri.card-outline-tabs>.card-header a:hover {
+    border-top: 3px solid #dee2e6;
+}
+
+.card-rri.card-outline-tabs>.card-header a.active {
+    border-top: 3px solid #00a8e6;
+}
+
+.bg-danger>.card-header .btn-tool, .bg-gradient-danger>.card-header .btn-tool, .card-rri:not(.card-outline)>.card-header .btn-tool {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.bg-danger>.card-header .btn-tool:hover, .bg-gradient-danger>.card-header .btn-tool:hover, .card-rri:not(.card-outline)>.card-header .btn-tool:hover {
+    color: #fff;
+}
+
+.dark-mode .card-rri:not(.card-outline) > .card-header {
+    background-color: #e74c3c;
+  }
+  
+  .dark-mode .card-rri:not(.card-outline) > .card-header,
+  .dark-mode .card-rri:not(.card-outline) > .card-header a {
+    color: #fff;
+  }
+  
+  .dark-mode .card-rri:not(.card-outline) > .card-header a.active {
+    color: #1f2d3d;
+  }
+  
+  .dark-mode .card-rri.card-outline {
+    border-top: 3px solid #e74c3c;
+  }
+  
+  .dark-mode .card-rri.card-outline-tabs > .card-header a:hover {
+    border-top: 3px solid #dee2e6;
+  }
+  
+  .dark-mode .card-rri.card-outline-tabs > .card-header a.active {
+    border-top: 3px solid #e74c3c;
+  }
+  

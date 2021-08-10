@@ -175,7 +175,7 @@
                         <div class="mr-auto p-2"><button type="button" class="btn btn-secondary btn-sm"
                                 ng-click="batal()">Batal</button></div>
                         <div class="p-2"><button type="submit" class="btn btn-primary btn-sm"
-                                ng-click="lanjut()">Lanjut</button></div>
+                                ng-click="lanjut('Info')">Lanjut</button></div>
                     </div>
                 </div>
             </div>
@@ -228,8 +228,6 @@
                                         <tr>
                                             <th>Kategori</th>
                                             <th>Tanggal Tayang</th>
-                                            <th>Lama Tayang</th>
-                                            <th>Waktu Tayang</th>
                                             <th>Durasi</th>
                                             <th>Harga Satuan</th>
                                             <th>Total</th>
@@ -240,11 +238,9 @@
                                             <td>{{tarif.kategori + ' ' + tarif.jenis}}</td>
                                             <td>{{model.tanggalmulai | date: 'd MMM y'}} s/d
                                                 {{model.tanggalselesai | date: 'd MMM y'}}</td>
-                                            <td>{{tarif.durasi}}</td>
-                                            <td>{{model.waktu.length}}</td>
-                                            <td>{{model.waktu.length * tarif.durasi}}</td>
+                                            <td>{{tarif.panjang}}</td>
                                             <td>{{tarif.harga | currency}}</td>
-                                            <td>{{tarif.harga * (model.waktu.length * tarif.durasi) | currency}}</td>
+                                            <td>{{tarif.harga * tarif.panjang | currency}}</td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -258,12 +254,12 @@
                                 <img src="../../dist/img/credit/american-express.png" alt="American Express">
                                 <img src="../../dist/img/credit/paypal2.png" alt="Paypal">
 
-                                <p class="text-muted well well-sm shadow-none" style="margin-top: 10px;">
+                                <!-- <p class="text-muted well well-sm shadow-none" style="margin-top: 10px;">
                                     Etsy doostang zoodles disqus groupon greplin oooj voxy zoodles, weebly ning heekya
                                     handango imeem
                                     plugg
                                     dopplr jibjab, movity jajah plickers sifteo edmodo ifttt zimbra.
-                                </p>
+                                </p> -->
                             </div>
                             <div class="col-6">
                                 <p class="lead">Amount Due <?= date('d-m-Y', strtotime(' +1 day'))?></p>
@@ -272,16 +268,16 @@
                                     <table class="table">
                                         <tr>
                                             <th style="width:50%">Subtotal:</th>
-                                            <td>{{tarif.harga * (model.waktu.length * tarif.durasi) | currency}}</td>
+                                            <td>{{tarif.harga * tarif.panjang | currency}}</td>
                                         </tr>
                                         <tr>
                                             <th>Tax (10%)</th>
-                                            <td>{{(tarif.harga * (model.waktu.length * tarif.durasi)) * 0.1 | currency}}
+                                            <td>{{(tarif.harga * tarif.panjang) * 0.1 | currency}}
                                             </td>
                                         </tr>
                                         <tr>
                                             <th>Total:</th>
-                                            <td>{{(tarif.harga * (model.waktu.length * tarif.durasi)) + ((tarif.harga * (model.waktu.length * tarif.durasi)) * 0.1) | currency}}
+                                            <td>{{(tarif.harga * tarif.panjang) + ((tarif.harga * tarif.panjang) * 0.1) | currency}}
                                             </td>
                                         </tr>
                                     </table>
@@ -314,7 +310,10 @@
         <div class="modal-dialog modal-xl" role="document">
             <div class="modal-content">
                 <div class="modal-body">
-                    <div class="table-responsive p-0">
+                    <div class="table-responsive p-0" style="height: 500px;">
+                        <div class="text-center">
+                            <h4>Info Jadwal Siaran Iklan</h4>
+                        </div>
                         <table class="table table-hover">
                             <thead>
                                 <tr>
@@ -346,7 +345,56 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                <div class="mr-auto p-2"> <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button></div>
+                    <div class="mr-auto p-2"> <button type="button" class="btn btn-secondary"
+                            data-dismiss="modal">Close</button></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="jadwalInfo" tabindex="-1" role="dialog" aria-labelledby="modelTitleId"
+        aria-hidden="true" data-backdrop="false" data-keyboard="false">
+        <div class="modal-dialog modal-xl" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="text-center">
+                        <h4>Info Jadwal Siaran Iklan</h4>
+                    </div>
+                    <div class="table-responsive p-0" style="height: 500px;">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>No</th>
+                                    <th>Tanggal</th>
+                                    <th>Pagi</th>
+                                    <th>Siang</th>
+                                    <th>Sore</th>
+                                    <th>Jumlah</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="item in jadwals">
+                                    <td>{{$index+1}}</td>
+                                    <td>{{item.tanggal}}</td>
+                                    <td>{{item.pagi}}</td>
+                                    <td>{{item.siang}}</td>
+                                    <td>{{item.sore}}</td>
+                                    <td>{{item.panjang}}</td>
+                                </tr>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td colspan="5">Total</td>
+                                    <td>{{total}} Kali</td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="mr-auto p-2"> <button type="button" class="btn btn-secondary"
+                            data-dismiss="modal">Close</button></div>
+                    <button type="button" class="btn btn-success float-right" ng-click="lanjut('pembayaran')">Pembayaran</button>
                 </div>
             </div>
         </div>

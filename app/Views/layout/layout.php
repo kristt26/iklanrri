@@ -19,6 +19,8 @@
     <link rel="stylesheet" href="../../plugins/bs-stepper/css/bs-stepper.min.css">
     <link rel="stylesheet" href="../../plugins/dropzone/min/dropzone.min.css">
     <link rel="stylesheet" href="../../dist/css/adminlte.min.css">
+    <link rel="stylesheet" href="../../dist/css/script.css">
+    <link rel="stylesheet" href="../../plugins/datatables/jquery.dataTables.min.js">
     <script type="text/javascript" src="https://app.sandbox.midtrans.com/snap/snap.js"
         data-client-key="SB-Mid-client-fs8aESL27KVF4nQ-"></script>
     <script src="../../plugins/jquery/jquery.min.js"></script>

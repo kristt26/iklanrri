@@ -1,6 +1,6 @@
 <div class="row" ng-controller="LayananController">
   <div class="col-md-4">
-    <div class="card card-danger">
+    <div class="card card-rri">
       <div class="card-header">
         <h3 class="card-title"><i class="fas fa-plus-square fa-1x" ></i>&nbsp;&nbsp; Data Layanan</h3>
       </div>
@@ -26,7 +26,7 @@
     </div>
   </div>
   <div class="col-md-8">
-    <div class="card card-danger">
+    <div class="card card-rri">
       <div class="card-header">
         <h3 class="card-title"><i class="fas fa-th-list"></i>&nbsp;&nbsp; Data Layanan</h3>
       </div>
@@ -48,7 +48,7 @@
               <td>{{item.status=='1' ? 'Aktif' : 'Tidak Aktif'}}</td>
               <td>
                 <button type="button" class="btn btn-warning btn-sm" ng-click ="edit(item)"><i class="fas fa-edit"></i></button>
-                <button type="button" class="btn btn-danger btn-sm" ng-click ="delete(item)"><i class="fas fa-trash"></i></button>
+                <button type="button" class="btn btn-rri btn-sm" ng-click ="delete(item)"><i class="fas fa-trash"></i></button>
               </td>
             </tr>
           </tbody>

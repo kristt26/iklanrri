@@ -25,33 +25,22 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-tachometer-alt"></i>
-                        <p>
-                            Master Data
-                            <i class="right fas fa-angle-left"></i>
-                        </p>
+                    <a href="<?=base_url('admin/layanan')?>" class="nav-link">
+                        <i class="nav-icon fa fa-rss"></i>
+                        <p>Layanan</p>
                     </a>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="<?=base_url('admin/layanan')?>" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Layanan</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="<?=base_url('admin/tarif')?>" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Tarif</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="../../index3.html" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Dashboard v3</p>
-                            </a>
-                        </li>
-                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="<?=base_url('admin/tarif')?>" class="nav-link">
+                        <i class="nav-icon fas fa-wallet"></i>
+                        <p>Tarif</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="<?=base_url('admin/users')?>" class="nav-link">
+                        <i class="nav-icon fas fa-users"></i>
+                        <p>Data User</p>
+                    </a>
                 </li>
                 <?php endif; ?>
 
@@ -71,6 +60,25 @@
                         <i class="nav-icon fas fa-bookmark"></i>
                         <p>
                             Pasang Iklan
+                        </p>
+                    </a>
+                </li>
+                <?php endif; ?>
+
+                <?php if(session()->get('role')=="Siaran"):?>
+                <li class="nav-item">
+                    <a href="<?=base_url('siaran/home')?>" class="nav-link">
+                        <i class="nav-icon fas fa-home"></i>
+                        <p>
+                            Dashboard
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="<?=base_url('siaran/order')?>" class="nav-link">
+                        <i class="nav-icon fas fa-bookmark"></i>
+                        <p>
+                            Order
                         </p>
                     </a>
                 </li>
