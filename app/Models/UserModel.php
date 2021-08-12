@@ -23,7 +23,8 @@ class UserModel extends Model
             $user = [
                 "username"=>"Administrator",
                 "password"=> base64_encode($this->encrypter->encrypt("Admin@123")),
-                "email"=>"admin@mail.com"
+                "email"=>"admin@mail.com",
+                "fullname"=>"Administrator"
             ];
             $this->db->table('user')->insert($user);
             $userid = $this->db->insertID();
@@ -41,7 +42,8 @@ class UserModel extends Model
             $user = [
                 "username"=>"Siaran",
                 "password"=> base64_encode($this->encrypter->encrypt("Admin@123")),
-                "email"=>"siaran@mail.com"
+                "email"=>"siaran@mail.com",
+                "fullname"=>"Siaran"
             ];
             $this->db->table('user')->insert($user);
             $userid = $this->db->insertID();

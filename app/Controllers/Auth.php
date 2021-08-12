@@ -6,7 +6,6 @@ use CodeIgniter\RESTful\ResourceController;
 use CodeIgniter\API\ResponseTrait;
 use App\Models\EmployeeModel;
 use App\Models\PemesanModel;
-use App\Models\PetugasModel;
 use Google\Client as Google_Client;
 use Google_Service_Oauth2;
 use PHPMailer\PHPMailer\Exception;
@@ -106,17 +105,9 @@ class Auth extends ResourceController
                 "id" => $result['id'],
                 "email" => $result['email'],
                 "role" => $result['role'],
-                'logged_in' => TRUE
+                'logged_in' => TRUE,
+                'nama'=>$result['fullname']
             ];
-            $bio = [];
-            if ($result['role'] == 'Admin') {
-                $petugas = new PetugasModel();
-                $bio = $petugas->where("userid", $result['id'])->first();
-                $ses['nama'] = $bio['nama'];
-            } else {
-                $ses['nama'] = $result['fullname'];
-            }
-
             $session->set($ses);
             return $this->respond($ses);
         } else {
