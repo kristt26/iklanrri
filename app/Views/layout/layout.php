@@ -20,10 +20,51 @@
     <link rel="stylesheet" href="../../plugins/dropzone/min/dropzone.min.css">
     <link rel="stylesheet" href="../../dist/css/adminlte.min.css">
     <link rel="stylesheet" href="../../dist/css/script.css">
-    <link rel="stylesheet" href="../../plugins/datatables/jquery.dataTables.min.js">
+    <!-- <link rel="stylesheet" href="../../libs/angular-datatables/dist/css/angular-datatables.css"> -->
+    <link rel="stylesheet" href="//cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css">
     <script type="text/javascript" src="https://app.sandbox.midtrans.com/snap/snap.js"
         data-client-key="SB-Mid-client-fs8aESL27KVF4nQ-"></script>
     <script src="../../plugins/jquery/jquery.min.js"></script>
+
+    <style>
+    .containerr {
+        display: flex;
+        height: 60vh;
+        justify-content: center;
+        align-items: center;
+        direction: row;
+    }
+
+    @media screen {
+        #print {
+            /* font-family:verdana, arial, sans-serif; */
+        }
+
+        .screen {
+            display: none;
+        }
+
+        .settt {
+            display: block;
+        }
+
+        @page {
+            size: landscape
+        }
+    }
+
+    @media print {
+
+        /* #print {font-family:georgia, times, serif;} */
+        .screen {
+            display: block;
+        }
+
+        .settt {
+            display: none;
+        }
+    }
+    </style>
 </head>
 
 <body class="hold-transition sidebar-mini navbar-fixed">

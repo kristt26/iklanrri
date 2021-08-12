@@ -6,6 +6,7 @@ angular.module('adminctrl', [])
     .controller('pasangIklanController', pasangIklanController)
     .controller('profileController', profileController)
     .controller('UserController', UserController)
+    .controller('orderController', orderController)
     ;
 
 function pageController($scope, helperServices) {
@@ -335,5 +336,62 @@ function UserController($scope, $http, helperServices, userServices, message) {
     //         })
     //     })
     // }
+}
+
+function orderController($scope, $http, helperServices, orderServices, message, $sce) {
+    $scope.$emit("SendUp", "Layanan");
+    $scope.datas = [];
+    $scope.model = {};
+    orderServices.get().then(res => {
+        $scope.datas = res;
+        console.log(res);
+    })
+    $scope.jadwal = (param)=>{
+        $scope.infoOrder = param;
+        $scope.jadwals = $scope.grouptanggal(param.jadwal);
+        $("#jadwalsiaran").modal("show");
+    }
+    $scope.files = "";
+    $scope.detailOrder = (item)=>{
+        $scope.infoOrder = item;
+        $scope.$applyAsync(x=>{
+            $scope.files = $sce.trustAsResourceUrl(helperServices.url + "img/file/" + item.kontent);
+        })
+        $("#detailOrder").modal("show");
+    }
+
+    $scope.print = ()=>{
+        $.LoadingOverlay("show");
+        $("#print").printArea();
+        setTimeout(() => {
+            $.LoadingOverlay("hide");
+        }, 1000);
+    }
+
+    $scope.grouptanggal = (data)=>{
+        $scope.total = 0;
+        var newArray = [];
+        var dataTanggal="";
+        data.forEach(element => {
+            if(dataTanggal != element.tanggal){
+                var item = {tanggal: element.tanggal}
+                newArray.push(item);
+                dataTanggal=element.tanggal;
+            }
+        });
+
+        newArray.forEach(element => {
+            element.pagi = '-';
+            element.siang = '-';
+            element.sore = '-';
+            var item = data.filter(x=>x.tanggal==element.tanggal);
+            item.forEach(element1 => {
+                element1.waktu=='Pagi' ? element.pagi = element1.waktu: element1.waktu == 'Siang' ? element.siang=element1.waktu : element1.waktu == 'Sore' ? element.sore = element1.waktu : '-';
+            });
+            element.panjang = item.length;
+            $scope.total += element.panjang;
+        });
+        return newArray;
+    }
 }
 

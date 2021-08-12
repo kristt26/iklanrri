@@ -83,7 +83,18 @@ class IklanModel extends Model
 
         foreach ($result as $key => $value) {
             $result[$key]['waktu'] = unserialize($result[$key]['waktu']);
+            $iklanid = $value['iklanid'];
+            $result[$key]['jadwal'] = $this->db->query("SELECT * FROM jadwalsiaran WHERE iklanid = '$iklanid'")->getResultArray();
         }
         return $result;
+    }
+
+    public function newIklan($id)
+    {
+        return $this->db->query("SELECT
+            *
+        FROM
+            `iklan`
+            LEFT JOIN `pembayaran` ON `pembayaran`.`iklanid` = `iklan`.`id`  WHERE iklan.id = '$id'")->getRowArray();
     }
 }

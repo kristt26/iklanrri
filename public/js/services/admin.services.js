@@ -5,6 +5,7 @@ angular.module('admin.service', [])
     .factory('pasangIklanServices', pasangIklanServices)
     .factory('profileServices', profileServices)
     .factory('userServices', userServices)
+    .factory('orderServices', orderServices)
     ;
 
 
@@ -477,6 +478,73 @@ function profileServices($http, $q, helperServices, AuthService, message) {
 
 function userServices($http, $q, helperServices, AuthService, message) {
     var controller = helperServices.url + 'admin/users/';
+    var service = {};
+    service.data = [];
+    return {
+        get: get
+    };
+
+    function get() {
+        var def = $q.defer();
+        $http({
+            method: 'get',
+            url: controller + 'read',
+            headers: AuthService.getHeader()
+        }).then(
+            (res) => {
+                service.data = res.data;
+                def.resolve(res.data);
+            },
+            (err) => {
+                def.reject(err.data);
+                message.info(err.data);
+            }
+        );
+        return def.promise;
+    }
+
+    // function post(params) {
+    //     var def = $q.defer();
+    //     $http({
+    //         method: 'put',
+    //         url: controller + 'create',
+    //         data: params,
+    //         headers: AuthService.getHeader()
+    //     }).then(
+    //         (res) => {
+    //             service.data = res.data;
+    //             def.resolve(res.data);
+    //         },
+    //         (err) => {
+    //             def.reject(err);
+    //             message.info(err.data);
+    //         }
+    //     );
+    //     return def.promise;
+    // }
+
+    // function put(params) {
+    //     var def = $q.defer();
+    //     $http({
+    //         method: 'put',
+    //         url: controller + 'update',
+    //         data: params,
+    //         headers: AuthService.getHeader()
+    //     }).then(
+    //         (res) => {
+    //             def.resolve(res.data);
+    //         },
+    //         (err) => {
+    //             def.reject(err);
+    //             message.info(err.data);
+    //         }
+    //     );
+    //     return def.promise;
+    // }
+}
+
+function orderServices($http, $q, helperServices, AuthService, message) {
+    var controller = helperServices.url + 'siaran/order/';
     var service = {};
     service.data = [];
     return {
