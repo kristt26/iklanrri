@@ -3,15 +3,11 @@
 namespace App\Controllers;
 
 use CodeIgniter\RESTful\ResourceController;
-use CodeIgniter\API\ResponseTrait;
-use App\Models\EmployeeModel;
-use App\Models\PemesanModel;
+use Firebase\JWT\JWT;
 use Google\Client as Google_Client;
-use Google_Service_Oauth2;
 use PHPMailer\PHPMailer\Exception;
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
-use Firebase\JWT\JWT;
 
 class Auth extends ResourceController
 {
@@ -34,7 +30,6 @@ class Auth extends ResourceController
     {
         // require_once APPPATH."libraries/vendor/autoload.php";
         $result = $this->userModel->check();
-
 
         $this->google_client->setClientId('635155083806-c7v7749em1v04u5oc194fq8f6gjd2hkd.apps.googleusercontent.com'); //Define your ClientID
 
@@ -60,10 +55,10 @@ class Auth extends ResourceController
                 if ($this->userModel->isAlreadyRegister($data['id'])) {
                     $user_data = array(
                         'first_name' => $data['given_name'],
-                        'last_name'  => $data['family_name'],
+                        'last_name' => $data['family_name'],
                         'email' => $data['email'],
                         'profile_picture' => $data['picture'],
-                        'updated_at' => $current_datetime
+                        'updated_at' => $current_datetime,
                     );
                     $this->userModel->updateUserGoogle($user_data, $data['id']);
                     $user_data = $this->userModel->readData($data['id']);
@@ -98,15 +93,15 @@ class Auth extends ResourceController
     public function login()
     {
         $session = session();
-        $data = (array)$this->request->getJSON();
+        $data = (array) $this->request->getJSON();
         $result = $this->userModel->login($data);
         if ($result) {
             $ses = [
                 "id" => $result['id'],
                 "email" => $result['email'],
                 "role" => $result['role'],
-                'logged_in' => TRUE,
-                'nama'=>$result['fullname']
+                'logged_in' => true,
+                'nama' => $result['fullname'],
             ];
             $session->set($ses);
             return $this->respond($ses);
@@ -118,7 +113,7 @@ class Auth extends ResourceController
     public function register()
     {
         try {
-            $data = (array)$this->request->getJSON();
+            $data = (array) $this->request->getJSON();
             $data['password'] = base64_encode($this->encrypter->encrypt($data['password']));
             $item = [
                 'fullname' => $data['fullname'],
@@ -134,7 +129,7 @@ class Auth extends ResourceController
             $pesan = view('mailconfirm', $data);
             $email = $this->sendMail($data, $pesan);
             $this->respond([true]);
-        } catch (\Throwable $e) {
+        } catch (\Throwable$e) {
             $pesan = $e->getMessage();
             if ($e->getCode() == "1062") {
                 return $this->fail(['message' => 'Username atau email Sudah Digunakakan, gunakan yang lain']);
@@ -153,7 +148,7 @@ class Auth extends ResourceController
             $this->userModel->update($decoded->id, ['status' => '1']);
             $this->session->setFlashdata('pesan', 'Silahkan Login untuk memulai');
             return redirect()->to('/auth');
-        } catch (\Exception $e) {
+        } catch (\Exception$e) {
             $this->respond(['message' => $e->getMessage()]);
             //  echo 'Caught exception: ',  $e->getMessage(), "\n";
         }

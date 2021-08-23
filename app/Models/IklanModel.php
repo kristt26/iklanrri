@@ -10,12 +10,10 @@ class IklanModel extends Model
     protected $allowedFields = ['id', 'topik', 'waktu', 'tanggalmulai', 'tanggalselesai', 'jeniskontent', 'kontent', 'tarifid', 'userid', 'status', 'tanggal', 'kategori', 'jenis', 'uraian', 'satuan', 'tarif'];
     protected $db;
 
-
     public function __construct()
     {
         $this->db = \Config\Database::connect();
     }
-
 
     public function readData()
     {

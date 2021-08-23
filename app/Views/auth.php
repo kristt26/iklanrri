@@ -28,7 +28,7 @@
                 <input type="text" placeholder="username" ng-model="model.username" required />
                 <input type="password" placeholder="password" ng-model="model.password" required />
                 <button type="submit">login</button>
-                <a href="<?= $loginButton?>">Google</a>
+                <a href="<?=$loginButton?>">Google</a>
                 <p class="message">Not registered? <a href="#">Create an account</a></p>
             </form>
         </div>
@@ -88,9 +88,8 @@
                     if (res.data){
                         message.info("Silahkan periksa email anda untuk confirmasi account", "Ok");
                     }
-                        
                 }, err => {
-                    message.error(err.data.messages.message, "Ok");
+                    message.error(err.data, "Ok");
                 })
             })
 

@@ -48,7 +48,7 @@
               <td>{{item.status=='1' ? 'Aktif' : 'Tidak Aktif'}}</td>
               <td>
                 <button type="button" class="btn btn-warning btn-sm" ng-click ="edit(item)"><i class="fas fa-edit"></i></button>
-                <button type="button" class="btn btn-rri btn-sm" ng-click ="delete(item)"><i class="fas fa-trash"></i></button>
+                <button type="button" class="btn btn-danger btn-sm" ng-click ="delete(item)"><i class="fas fa-trash"></i></button>
               </td>
             </tr>
           </tbody>
