@@ -7,7 +7,6 @@ use Firebase\JWT\JWT;
 use Google\Client as Google_Client;
 use PHPMailer\PHPMailer\Exception;
 use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\SMTP;
 
 class Auth extends ResourceController
 {
@@ -122,13 +121,17 @@ class Auth extends ResourceController
                 'email' => $data['email'],
             ];
             $result = $this->userModel->insertUser($item);
-            $data['id'] = $result;
-            $data['exp'] = time() + (60 * 60);
-            $jwt = JWT::encode($data, TOKENJWT);
-            $data['tokenconfirm'] = $jwt;
-            $pesan = view('mailconfirm', $data);
-            $email = $this->sendMail($data, $pesan);
-            $this->respond([true]);
+            if ($result) {
+                $data['id'] = $result;
+                $data['exp'] = time() + (60 * 60);
+                $jwt = JWT::encode($data, TOKENJWT);
+                $data['tokenconfirm'] = $jwt;
+                $pesan = view('mailconfirm', $data);
+                $email = $this->sendMail($data, $pesan);
+                $this->respond([true]);
+            } else {
+                return $this->fail(['message' => 'Username atau email Sudah Digunakakan, gunakan yang lain']);
+            }
         } catch (\Throwable$e) {
             $pesan = $e->getMessage();
             if ($e->getCode() == "1062") {
@@ -167,7 +170,7 @@ class Auth extends ResourceController
     public function sendMail($data, $pesan)
     {
         try {
-            $this->mail->SMTPDebug = SMTP::DEBUG_SERVER;
+            // $this->mail->SMTPDebug = SMTP::DEBUG_SERVER;
             $this->mail->isSMTP();
             $this->mail->Host = 'smtp.gmail.com';
             $this->mail->SMTPAuth = true;

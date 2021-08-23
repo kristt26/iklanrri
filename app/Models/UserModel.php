@@ -15,61 +15,63 @@ class UserModel extends Model
         $this->encrypter = \Config\Services::encrypter();
         $this->db = \Config\Database::connect();
     }
-    
+
     public function check()
     {
-        if($this->db->table('user')->countAllResults(false) == 0){
+        if ($this->db->table('user')->countAllResults(false) == 0) {
             $this->db->transBegin();
             $user = [
-                "username"=>"Administrator",
-                "password"=> base64_encode($this->encrypter->encrypt("Admin@123")),
-                "email"=>"admin@mail.com",
-                "fullname"=>"Administrator"
+                "username" => "Administrator",
+                "password" => base64_encode($this->encrypter->encrypt("Admin@123")),
+                "email" => "admin@mail.com",
+                "fullname" => "Administrator",
+                "status" => "1",
             ];
             $this->db->table('user')->insert($user);
             $userid = $this->db->insertID();
             $role = [
-                    "role"=>"Admin"
+                "role" => "Admin",
             ];
             $this->db->table('role')->insert($role);
             $roleid = $this->db->insertID();
             $roleuser = [
-                'userid'=>$userid,
-                'roleid'=>$roleid
+                'userid' => $userid,
+                'roleid' => $roleid,
             ];
             $this->db->table('userinrole')->insert($roleuser);
 
             $user = [
-                "username"=>"Siaran",
-                "password"=> base64_encode($this->encrypter->encrypt("Admin@123")),
-                "email"=>"siaran@mail.com",
-                "fullname"=>"Siaran"
+                "username" => "Siaran",
+                "password" => base64_encode($this->encrypter->encrypt("Admin@123")),
+                "email" => "siaran@mail.com",
+                "fullname" => "Siaran",
+                "status" => "1",
             ];
             $this->db->table('user')->insert($user);
             $userid = $this->db->insertID();
             $role = [
-                    "role"=>"Siaran"
+                "role" => "Siaran",
             ];
             $this->db->table('role')->insert($role);
             $roleid = $this->db->insertID();
             $roleuser = [
-                'userid'=>$userid,
-                'roleid'=>$roleid
+                'userid' => $userid,
+                'roleid' => $roleid,
             ];
             $this->db->table('userinrole')->insert($roleuser);
             $role = [
-                "role"=>"Pemesan"
+                "role" => "Pemesan",
             ];
             $this->db->table('role')->insert($role);
-            if($this->db->transStatus()=== false){
+            if ($this->db->transStatus() === false) {
                 $this->db->transRollback();
                 return true;
-            }else{
+            } else {
                 $this->db->transCommit();
                 return false;
             }
         }
-    }    
+    }
 
     public function login($data)
     {
@@ -92,14 +94,18 @@ class UserModel extends Model
             `user`
             LEFT JOIN `userinrole` ON `userinrole`.`userid` = `user`.`id`
             LEFT JOIN `role` ON `role`.`id` = `userinrole`.`roleid` WHERE username='$username'")->getRowArray();
-        if($result){
-            $p = $this->encrypter->decrypt(base64_decode($result['password']));
-            if($p==$data['password']){
-                return $result;
-            }else{
+        if ($result) {
+            if ($result['status'] != "0") {
+                $p = $this->encrypter->decrypt(base64_decode($result['password']));
+                if ($p == $data['password']) {
+                    return $result;
+                } else {
+                    return false;
+                }
+            } else {
                 return false;
             }
-        }else{
+        } else {
             return false;
         }
     }
@@ -120,7 +126,7 @@ class UserModel extends Model
 
     public function updateUserGoogle($data, $id)
     {
-        $this->db->table('user')->update($data, ['id'=>$id]);
+        $this->db->table('user')->update($data, ['id' => $id]);
     }
     public function insertUser($data)
     {
@@ -129,14 +135,14 @@ class UserModel extends Model
         $this->db->table('user')->insert($data);
         $userid = $this->db->insertID();
         $userinrole = [
-            'userid'=>$userid,
-            'roleid'=>$role['id']
+            'userid' => $userid,
+            'roleid' => $role['id'],
         ];
         $this->db->table('userinrole')->insert($userinrole);
-        if($this->db->transStatus()){
+        if ($this->db->transStatus()) {
             $this->db->transCommit();
             return $userid;
-        }else{
+        } else {
             $this->db->transRollback();
             return false;
         }
