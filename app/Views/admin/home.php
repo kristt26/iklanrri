@@ -58,7 +58,7 @@
 </div>
 
 <script src="../../libs/chart.js/dist/chart.js"></script>
-<script>
+<!-- <script>
 var ctx = document.getElementById('myChart').getContext('2d');
 var myChart = new Chart(ctx, {
     type: 'bar',
@@ -94,4 +94,4 @@ var myChart = new Chart(ctx, {
         }
     }
 });
-</script>
+</script> -->
