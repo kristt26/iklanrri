@@ -128,4 +128,4 @@ public/img/file/*
 
 
 app/Config/App.php
-node_modules/*
+node_modules
