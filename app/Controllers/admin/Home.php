@@ -4,17 +4,19 @@ use App\Controllers\BaseController;
 
 class Home extends BaseController
 {
+	public $data;
     public function __construct()
     {
-        $userModel = new \App\Models\UserModel();
+        $this->data = new \App\Models\HomeModel();
     }
 
     public function index()
     {
+		$result = $this->data->getData();
         $data['datamenu'] = ['menu' => "Dashboard"];
         $data['sidebar'] = view('layout/sidebar');
         $data['header'] = view('layout/header');
-        $data['content'] = view('admin/home');
+        $data['content'] = view('admin/home', $result);
         return view('layout/layout', $data);
     }
 }
