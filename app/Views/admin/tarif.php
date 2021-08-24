@@ -1,6 +1,6 @@
 <div class="row" ng-controller="tarifController">
     <div class="col-md-12">
-        <div class="card card-danger">
+        <div class="card card-rri">
             <div class="card-header">
                 <h3 class="card-title"><i class="fas fa-th-list"></i>&nbsp;&nbsp; Data Tarif</h3>
                 <div class="card-tools">

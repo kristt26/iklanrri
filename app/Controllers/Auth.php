@@ -59,7 +59,7 @@ class Auth extends ResourceController
                         'profile_picture' => $data['picture'],
                         'updated_at' => $current_datetime,
                     );
-                    $this->userModel->updateUserGoogle($user_data, $data['id']);
+                    $this->userModel->updateUser($user_data, $data['id']);
                     $user_data = $this->userModel->readData($data['id']);
                     $user_data['logged_in'] = true;
                     $user_data['role'] = "Pemesan";
@@ -95,15 +95,10 @@ class Auth extends ResourceController
         $data = (array) $this->request->getJSON();
         $result = $this->userModel->login($data);
         if ($result) {
-            $ses = [
-                "id" => $result['id'],
-                "email" => $result['email'],
-                "role" => $result['role'],
-                'logged_in' => true,
-                'nama' => $result['fullname'],
-            ];
-            $session->set($ses);
-            return $this->respond($ses);
+            $result['logged_in'] = true;
+            $result['nama'] = $result['fullname'];
+            $session->set($result);
+            return $this->respond($result);
         } else {
             return $this->fail("Data Tidak Ditemukan");
         }

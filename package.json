@@ -1,5 +1,6 @@
 {
   "dependencies": {
-    "angularjs-datatables": "^0.5.9"
+    "angularjs-datatables": "^0.5.9",
+    "chart.js": "^3.5.1"
   }
 }

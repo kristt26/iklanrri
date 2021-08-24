@@ -198,8 +198,9 @@ function pasangIklanController($scope, $http, helperServices, pasangIklanService
                     onPending: function(result) {
                         console.log(result.status_message);
                         pasangIklanServices.cekStatus(result).then(res => {
-                            message.info("Pemesanan Iklan Sukses");
-                            $("#invoice").modal("hide");
+                            message.dialogmessage("Pemesanan Iklan Sukses", "OK").then(x=>{
+                                document.location.reload();
+                            });
                         })
                     },
                     onError: function(result) {

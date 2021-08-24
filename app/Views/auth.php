@@ -24,7 +24,7 @@
             </form>
             <form class="login-form" ng-submit="login()">
                 <h2>Login User</h2>
-                <div class="alert alert-danger" ng-show="error">Periksa Username dan Password Anda</div>
+                <div class="alert alert-danger" ng-if="error">Periksa Username dan Password Anda</div>
                 <input type="text" placeholder="username" ng-model="model.username" required />
                 <input type="password" placeholder="password" ng-model="model.password" required />
                 <button type="submit">login</button>

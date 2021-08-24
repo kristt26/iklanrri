@@ -1,6 +1,6 @@
 <div class="row" ng-controller="pasangIklanController">
     <div class="col-md-12">
-        <div class="card card-danger">
+        <div class="card card-rri">
             <div class="card-header">
                 <h3 class="card-title"><i class="fas fa-th-list"></i>&nbsp;&nbsp; Histori Pemasangan</h3>
                 <div class="card-tools">
@@ -51,9 +51,9 @@
     </div>
     <div class="modal fade" id="tarifId" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true"
         data-backdrop="false" data-keyboard="false">
-        <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
             <div class="modal-content">
-                <div class="modal-header bg-danger">
+                <div class="modal-header bg-rri">
                     <h5 class="modal-title">Pasang Iklan</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
@@ -191,7 +191,7 @@
                             <div class="col-12">
                                 <h4>
                                     <i class="fas fa-globe"></i> RRI NUSANTARA 1 JAYAPURA
-                                    <small class="float-right">Date: <?= date('d M Y');?></small>
+                                    <small class="float-right">Date: <?=date('d M Y');?></small>
                                 </h4>
                             </div>
                         </div>
@@ -209,16 +209,16 @@
                             <div class="col-sm-4 invoice-col">
                                 To
                                 <address>
-                                    <strong><?= session()->get("first_name").' '.session()->get("last_name");?></strong><br>
-                                    <?= session()->get("alamat") ? session()->get("alamat") : '' ;?><br>
-                                    Phone: <?= session()->get("kontak");?><br>
-                                    Email: <?= session()->get("email");?>
+                                    <strong><?=session()->get("first_name") . ' ' . session()->get("last_name");?></strong><br>
+                                    <?=session()->get("alamat") ? session()->get("alamat") : '';?><br>
+                                    Phone: <?=session()->get("kontak");?><br>
+                                    Email: <?=session()->get("email");?>
                                 </address>
                             </div>
                             <div class="col-sm-4 invoice-col">
                                 <br>
                                 <b>Order ID:</b> {{model.idorder}}<br>
-                                <b>Payment Due:</b> <?= date('d-m-Y', strtotime(' +1 day'))?><br>
+                                <b>Payment Due:</b> <?=date('d-m-Y', strtotime(' +1 day'))?><br>
                             </div>
                         </div>
                         <div class="row">
@@ -262,7 +262,7 @@
                                 </p> -->
                             </div>
                             <div class="col-6">
-                                <p class="lead">Amount Due <?= date('d-m-Y', strtotime(' +1 day'))?></p>
+                                <p class="lead">Amount Due <?=date('d-m-Y', strtotime(' +1 day'))?></p>
 
                                 <div class="table-responsive">
                                     <table class="table">
@@ -400,5 +400,7 @@
         </div>
     </div>
 </div>
+
+<script type="text/javascript" src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="SB-Mid-client-fs8aESL27KVF4nQ-"></script>
 
 <!-- Button trigger modal -->

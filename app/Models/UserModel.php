@@ -128,6 +128,11 @@ class UserModel extends Model
     {
         $this->db->table('user')->update($data, ['id' => $id]);
     }
+
+    public function updateUser($data, $id)
+    {
+        $this->db->table('user')->update($data, ['login_oauth_uid' => $id]);
+    }
     public function insertUser($data)
     {
         $this->db->transBegin();

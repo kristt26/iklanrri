@@ -47,7 +47,8 @@ function MessageServices(swangular, $q) {
         showCancelButton: showCancel,
         confirmButtonText: yesText,
         cancelButtonText: cancelText,
-        reverseButtons: true
+        reverseButtons: true,
+        allowOutsideClick: false
       })
       .then(result => {
         if (result.value) {
@@ -81,39 +82,6 @@ function MessageServices(swangular, $q) {
         confirmButtonText: yesText,
         reverseButtons: true,
         allowOutsideClick: false
-      })
-      .then(result => {
-        if (result.value) {
-          def.resolve(result.value);
-        } else {
-          def.reject(result.value);
-        }
-      });
-
-    return def.promise;
-  }
-
-  function dialog(messageText, yesBtn, cancelBtn) {
-    var def = $q.defer();
-    var yesText = "Ya";
-    var cancelText = "Batal";
-    var showCancel = true;
-
-    if (yesBtn) yesText = yesBtn;
-
-    if (cancelBtn) {
-      cancelText = cancelBtn;
-    } else showCancel = false;
-
-    swangular
-      .swal({
-        title: "Yakin ?",
-        text: messageText,
-        type: "warning",
-        showCancelButton: showCancel,
-        confirmButtonText: yesText,
-        cancelButtonText: cancelText,
-        reverseButtons: true
       })
       .then(result => {
         if (result.value) {
