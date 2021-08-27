@@ -40,6 +40,11 @@ $routes->get('/admin/users', 'admin/Users::index', ['filter' => 'auth']);
 $routes->get('/home', 'Home::index', ['filter' => 'auth']);
 $routes->get('/iklan', 'Iklan::index', ['filter' => 'auth']);
 $routes->get('/profile', 'Profile::index', ['filter' => 'auth']);
+$routes->get('/admin/jadwal', 'admin/Jadwal::index', ['filter' => 'auth']);
+$routes->get('/siaran/jadwal', 'siaran/Jadwal::index', ['filter' => 'auth']);
+$routes->get('/jadwal', 'Jadwal::index', ['filter' => 'auth']);
+$routes->get('/siaran/home', 'siaran/Home::index', ['filter' => 'auth']);
+$routes->get('/siaran/order', 'siaran/Order::index', ['filter' => 'auth']);
 
 /*
  * --------------------------------------------------------------------

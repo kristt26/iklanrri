@@ -14,12 +14,19 @@
     <div class="login-page">
         <div class="form">
             <form class="register-form" ng-submit="save()">
-                <h2>Registered</h2>
-                <input type="text" placeholder="Nama Pengguna" ng-model="model.fullname" required />
-                <input type="text" placeholder="username" ng-model="model.username" required />
-                <input type="password" placeholder="password" ng-model="model.password" required />
-                <input type="text" placeholder="email address" ng-model="model.email" required />
-                <button type="submit">create</button>
+                <div ng-if="setForm=='create'">
+                    <h2>Registered</h2>
+                    <input type="text" placeholder="Nama Pengguna" ng-model="model.fullname" required />
+                    <input type="text" placeholder="username" ng-model="model.username" required />
+                    <input type="password" placeholder="password" ng-model="model.password" required />
+                    <input type="text" placeholder="email address" ng-model="model.email" required />
+                    <button type="submit">create</button>
+                </div>
+                <div ng-if="setForm=='reset'">
+                    <h2>Reset</h2>
+                    <input type="text" placeholder="email address" ng-model="model.email" required />
+                    <button type="submit">reset</button>
+                </div>
                 <p class="message">Already registered? <a href="#">Sign In</a></p>
             </form>
             <form class="login-form" ng-submit="login()">
@@ -29,7 +36,8 @@
                 <input type="password" placeholder="password" ng-model="model.password" required />
                 <button type="submit">login</button>
                 <a href="<?=$loginButton?>">Google</a>
-                <p class="message">Not registered? <a href="#">Create an account</a></p>
+                <p class="message">Not registered? <a href="#" ng-click="Form('create')">Create an account</a></p>
+                <p class="message">forgot password? <a href="#" ng-click="Form('reset')">Reset Password</a></p>
             </form>
         </div>
     </div>
@@ -42,8 +50,7 @@
     <script src="../../libs/loading/dist/loadingoverlay.min.js"></script>
 
     <script>
-    angular.module('auth', ['helper.service', 'swangular',
-            'message.service'
+    angular.module('auth', ['helper.service', 'swangular', 'message.service'
         ])
         .controller('userLogin', userLogin);
 
@@ -58,9 +65,13 @@
             message.info('<?=session()->getFlashdata('pesan')?>');
         }
         $scope.model = {};
+        $scope.setForm = "";
         $scope.error = false
         $scope.model.username = 'Administrator';
         $scope.model.password = 'Admin@123';
+        $scope.Form = (set)=>{
+            $scope.setForm = set;
+        }
         $scope.login = () => {
             $http({
                 method: "post",
@@ -80,21 +91,38 @@
             })
         }
         $scope.save = () => {
-            message.dialogmessage('Anda Yakin?', 'Ya', 'Tidak').then(x => {
-                $.LoadingOverlay("show");
-                $http({
-                    method: "post",
-                    url: "<?=base_url('auth/register')?>",
-                    data: $scope.model
-                }).then(res => {
-                    $.LoadingOverlay("hide");
-                    message.info("Silahkan periksa email anda untuk confirmasi account", "Ok");
-                }, err => {
-                    $.LoadingOverlay("hide");
-                    message.error(err.data.messages.message, "Ok");
-                    console.log(err.data.messages);
+            if($scope.setForm=='create'){
+                message.dialogmessage('Anda Yakin?', 'Ya', 'Tidak').then(x => {
+                    $.LoadingOverlay("show");
+                    $http({
+                        method: "post",
+                        url: "<?=base_url('auth/register')?>",
+                        data: $scope.model
+                    }).then(res => {
+                        $.LoadingOverlay("hide");
+                        message.info("Silahkan periksa email anda untuk confirmasi account", "Ok");
+                    }, err => {
+                        $.LoadingOverlay("hide");
+                        message.error(err.data.messages.message, "Ok");
+                        console.log(err.data.messages);
+                    })
                 })
-            })
+            }else{
+                message.dialogmessage('Anda Yakin ingin mereset password?', 'Ya', 'Tidak').then(x => {
+                    $.LoadingOverlay("show");
+                    $http({
+                        method: "get",
+                        url: "<?=base_url('auth/reset/')?>/"+$scope.model.email
+                    }).then(res => {
+                        $.LoadingOverlay("hide");
+                        message.info("Silahkan periksa email anda", "Ok");
+                    }, err => {
+                        $.LoadingOverlay("hide");
+                        message.error(err.data.messages.message, "Ok");
+                        console.log(err.data.messages);
+                    })
+                })
+            }
         }
     }
     </script>

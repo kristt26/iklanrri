@@ -42,6 +42,12 @@
                         <p>Data User</p>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a href="<?=base_url('admin/jadwal')?>" class="nav-link">
+                        <i class="nav-icon fas fa-calendar"></i>
+                        <p>Jadwal Siaran</p>
+                    </a>
+                </li>
                 <?php endif;?>
 
                 <!-- Menu Pemesan -->
@@ -63,6 +69,12 @@
                         </p>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a href="<?=base_url('jadwal')?>" class="nav-link">
+                        <i class="nav-icon fas fa-calendar"></i>
+                        <p>Jadwal Siaran</p>
+                    </a>
+                </li>
                 <?php endif;?>
 
                 <?php if (session()->get('role') == "Siaran"): ?>
@@ -80,6 +92,12 @@
                         <p>
                             Order
                         </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="<?=base_url('siaran/jadwal')?>" class="nav-link">
+                        <i class="nav-icon fas fa-calendar"></i>
+                        <p>Jadwal Siaran</p>
                     </a>
                 </li>
                 <?php endif;?>

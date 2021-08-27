@@ -137,6 +137,35 @@ class Auth extends ResourceController
         }
     }
 
+    public function reset($email)
+    {
+        helper('text');
+        try {
+            $result = $this->userModel->query("SELECT * FROM user WHERE email = '$email'")->getResultArray();
+
+            if(count($result)>0){
+                $randpass = random_string('alnum', 16);
+                $id = $result[0]['id'];
+                $pass = base64_encode($this->encrypter->encrypt($randpass));
+                $update = $this->userModel->query("UPDATE user SET password='$pass' WHERE id = '$id'");
+                if($update){
+                    $result[0]['randpass'] = $randpass;
+                    $pesan = view('mailreset', $result[0]);
+                    $email = $this->resetMail($result[0], $pesan);
+                    $this->respond([true]);
+                }else{
+                    return $this->fail(['message' => 'Reset Gagal']);
+                }
+            }else{
+                return $this->fail(['message' => 'Email tidak Terdaftar']);
+            }
+            
+        } catch (\Throwable$e) {
+            $pesan = $e->getMessage();
+            return $this->fail($pesan);
+        }
+    }
+
     public function confirm()
     {
         try {
@@ -177,6 +206,30 @@ class Auth extends ResourceController
             $this->mail->addAddress($data['email'], $data['fullname']);
             $this->mail->isHTML(true);
             $this->mail->Subject = 'Email Confirmation';
+            $this->mail->msgHTML($pesan);
+            $this->mail->send();
+            return true;
+        } catch (Exception $e) {
+            $this->mail->ErrorInfo;
+            return false;
+        }
+    }
+
+    public function resetMail($data, $pesan)
+    {
+        try {
+            // $this->mail->SMTPDebug = SMTP::DEBUG_SERVER;
+            $this->mail->isSMTP();
+            $this->mail->Host = 'smtp.gmail.com';
+            $this->mail->SMTPAuth = true;
+            $this->mail->Username = 'emailfortesting1011@gmail.com';
+            $this->mail->Password = '26031988@Aj';
+            $this->mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
+            $this->mail->Port = 465;
+            $this->mail->setFrom('noreply@rrijayapura.com', 'RRI Nusantara 1');
+            $this->mail->addAddress($data['email'], $data['fullname']);
+            $this->mail->isHTML(true);
+            $this->mail->Subject = 'Reset Password';
             $this->mail->msgHTML($pesan);
             $this->mail->send();
             return true;

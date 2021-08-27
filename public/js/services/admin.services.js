@@ -5,7 +5,8 @@ angular.module('admin.service', [])
     .factory('pasangIklanServices', pasangIklanServices)
     .factory('profileServices', profileServices)
     .factory('userServices', userServices)
-    .factory('orderServices', orderServices);
+    .factory('orderServices', orderServices)
+    .factory('jadwalServices', jadwalServices);
 
 
 function dashboardServices($http, $q, StorageService, $state, helperServices, AuthService) {
@@ -616,4 +617,50 @@ function orderServices($http, $q, helperServices, AuthService, message) {
     //     );
     //     return def.promise;
     // }
+}
+
+function jadwalServices($http, $q, helperServices, AuthService, message) {
+    var controller = helperServices.url + 'admin/jadwal/';
+    var service = {};
+    service.data = [];
+    return {
+        get: get, detail:detail
+    };
+
+    function get() {
+        var def = $q.defer();
+        $http({
+            method: 'get',
+            url: controller + 'read',
+            headers: AuthService.getHeader()
+        }).then(
+            (res) => {
+                service.data = res.data;
+                def.resolve(res.data);
+            },
+            (err) => {
+                def.reject(err.data);
+                message.info(err.data);
+            }
+        );
+        return def.promise;
+    }
+    function detail(tanggal) {
+        var def = $q.defer();
+        $http({
+            method: 'get',
+            url: controller + 'detail/' + tanggal,
+            headers: AuthService.getHeader()
+        }).then(
+            (res) => {
+                service.data = res.data;
+                def.resolve(res.data);
+            },
+            (err) => {
+                def.reject(err.data);
+                message.info(err.data);
+            }
+        );
+        return def.promise;
+    }
 }
