@@ -124,6 +124,8 @@ nb-configuration.xml
 /results/
 /phpunit*.xml
 /.phpunit.*.cache
+public/img/file/*
 
 
 app/Config/App.php
+node_modules

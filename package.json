@@ -1,6 +1,10 @@
 {
   "dependencies": {
     "angularjs-datatables": "^0.5.9",
+<<<<<<< HEAD
     "fullcalendar": "^5.9.0"
+=======
+    "chart.js": "^3.5.1"
+>>>>>>> 4f32aae0ce6cee1ab1c75e85cabad15e2cc791f7
   }
 }

@@ -24,11 +24,11 @@
             </form>
             <form class="login-form" ng-submit="login()">
                 <h2>Login User</h2>
-                <div class="alert alert-danger" ng-show="error">Periksa Username dan Password Anda</div>
+                <div class="alert alert-danger" ng-if="error">Periksa Username dan Password Anda</div>
                 <input type="text" placeholder="username" ng-model="model.username" required />
                 <input type="password" placeholder="password" ng-model="model.password" required />
                 <button type="submit">login</button>
-                <a href="<?= $loginButton?>">Google</a>
+                <a href="<?=$loginButton?>">Google</a>
                 <p class="message">Not registered? <a href="#">Create an account</a></p>
             </form>
         </div>
@@ -39,6 +39,7 @@
     <script src="<?=base_url()?>/js/services/message.services.js"></script>
     <script src="<?=base_url()?>/libs/sweetalert2/dist/sweetalert2.all.min.js"></script>
     <script src="<?=base_url()?>/libs/swangular/swangular.js"></script>
+    <script src="../../libs/loading/dist/loadingoverlay.min.js"></script>
 
     <script>
     angular.module('auth', ['helper.service', 'swangular',
@@ -80,20 +81,20 @@
         }
         $scope.save = () => {
             message.dialogmessage('Anda Yakin?', 'Ya', 'Tidak').then(x => {
+                $.LoadingOverlay("show");
                 $http({
                     method: "post",
                     url: "<?=base_url('auth/register')?>",
                     data: $scope.model
                 }).then(res => {
-                    if (res.data){
-                        message.info("Silahkan periksa email anda untuk confirmasi account", "Ok");
-                    }
-                        
+                    $.LoadingOverlay("hide");
+                    message.info("Silahkan periksa email anda untuk confirmasi account", "Ok");
                 }, err => {
+                    $.LoadingOverlay("hide");
                     message.error(err.data.messages.message, "Ok");
+                    console.log(err.data.messages);
                 })
             })
-
         }
     }
     </script>

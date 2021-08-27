@@ -6,8 +6,7 @@ angular.module('adminctrl', [])
     .controller('pasangIklanController', pasangIklanController)
     .controller('profileController', profileController)
     .controller('UserController', UserController)
-    .controller('orderController', orderController)
-    ;
+    .controller('orderController', orderController);
 
 function pageController($scope, helperServices) {
     $scope.Title = "Page Header";
@@ -64,13 +63,19 @@ function tarifController($scope, $http, helperServices, tarifServices, layananSe
     $scope.simpan = true;
     tarifServices.get().then(res => {
         $scope.datas = res;
-        layananServices.get().then(res => {
-            $scope.layanans = res;
+        console.log(res);
+        layananServices.get().then(lay => {
+            $scope.layanans = lay;
         })
     })
     $scope.edit = (item) => {
         $scope.model = angular.copy(item);
         $scope.simpan = false;
+        $scope.$applyAsync(x => {
+            $scope.layanan = $scope.layanans.find(x => x.id == $scope.model.layananid);
+            console.log($scope.layanan);
+        })
+        $("#tarifId").modal("show");
     }
     $scope.save = (param) => {
         message.dialog("Anda yakin ???", "Ya", "Tidak").then(x => {
@@ -124,7 +129,7 @@ function pasangIklanController($scope, $http, helperServices, pasangIklanService
             element.tanggalselesai = new Date(element.tanggalselesai);
         });
         console.log($scope.datas);
-        
+
         // const groupByBrand = groupBy('tanggal');
         // var test = groupByBrand($scope.datas[0].jadwalsiaran)
         // console.log(
@@ -132,15 +137,15 @@ function pasangIklanController($scope, $http, helperServices, pasangIklanService
         //   );
         // $("#invoice").modal("show");
     })
-    $scope.grouptanggal = (data)=>{
+    $scope.grouptanggal = (data) => {
         $scope.total = 0;
         var newArray = [];
-        var dataTanggal="";
+        var dataTanggal = "";
         data.forEach(element => {
-            if(dataTanggal != element.tanggal){
-                var item = {tanggal: element.tanggal}
+            if (dataTanggal != element.tanggal) {
+                var item = { tanggal: element.tanggal }
                 newArray.push(item);
-                dataTanggal=element.tanggal;
+                dataTanggal = element.tanggal;
             }
         });
 
@@ -148,9 +153,9 @@ function pasangIklanController($scope, $http, helperServices, pasangIklanService
             element.pagi = '-';
             element.siang = '-';
             element.sore = '-';
-            var item = data.filter(x=>x.tanggal==element.tanggal);
+            var item = data.filter(x => x.tanggal == element.tanggal);
             item.forEach(element1 => {
-                element1.waktu=='Pagi' ? element.pagi = element1.waktu: element1.waktu == 'Siang' ? element.siang=element1.waktu : element1.waktu == 'Sore' ? element.sore = element1.waktu : '-';
+                element1.waktu == 'Pagi' ? element.pagi = element1.waktu : element1.waktu == 'Siang' ? element.siang = element1.waktu : element1.waktu == 'Sore' ? element.sore = element1.waktu : '-';
             });
             element.panjang = item.length;
             $scope.total += element.panjang;
@@ -164,7 +169,7 @@ function pasangIklanController($scope, $http, helperServices, pasangIklanService
 
     $scope.jadwals = [];
     $scope.total = 0;
-    $scope.tampilJadwal = (data)=>{
+    $scope.tampilJadwal = (data) => {
         $scope.jadwals = $scope.grouptanggal(data.jadwalsiaran);
         $("#jadwalsiaran").modal('show');
         console.log($scope.jadwals);
@@ -178,25 +183,27 @@ function pasangIklanController($scope, $http, helperServices, pasangIklanService
                 console.log('token = ' + data);
                 var resultType = document.getElementById('result-type');
                 var resultData = document.getElementById('result-data');
+
                 function changeResult(type, data) {
                     $("#result-type").val(type);
                     $("#result-data").val(JSON.stringify(data));
                 }
                 snap.pay(data, {
-                    onSuccess: function (result) {
+                    onSuccess: function(result) {
                         changeResult('success', result);
                         console.log(result.status_message);
                         console.log(result);
                         $("#payment-form").submit();
                     },
-                    onPending: function (result) {
+                    onPending: function(result) {
                         console.log(result.status_message);
                         pasangIklanServices.cekStatus(result).then(res => {
-                            message.info("Pemesanan Iklan Sukses");
-                            $("#invoice").modal("hide");
+                            message.dialogmessage("Pemesanan Iklan Sukses", "OK").then(x=>{
+                                document.location.reload();
+                            });
                         })
                     },
-                    onError: function (result) {
+                    onError: function(result) {
                         changeResult('error', result);
                         console.log(result.status_message);
                         $("#payment-form").submit();
@@ -217,48 +224,46 @@ function pasangIklanController($scope, $http, helperServices, pasangIklanService
         console.log(item);
     }
     $scope.lanjut = (set) => {
-        var itemharga = $scope.cekHarga($scope.model);
-        if(set=='Info'){
-            if(itemharga){
-                var param = angular.copy($scope.model);
-                param.tanggalmulai = param.tanggalmulai.getFullYear() + "-" + (param.tanggalmulai.getMonth() + 1) + "-" + param.tanggalmulai.getDate();
-                param.tanggalselesai = param.tanggalselesai.getFullYear() + "-" + (param.tanggalselesai.getMonth() + 1) + "-" + param.tanggalselesai.getDate();
-                pasangIklanServices.getJadwal(param).then(res=>{
-                    $scope.jadwals = $scope.grouptanggal(res);
-                    $scope.tarif.panjang = res.length;
-                    $scope.tarif.durasi = itemharga.durasi;
-                    $scope.tarif.harga = itemharga.harga;
-                    $scope.model.idorder = Date.now();
-                    $scope.model.tarifid = itemharga.itemharga.id;
-                    $scope.model.biaya = (itemharga.harga * ($scope.tarif.panjang)) + ((itemharga.harga * ($scope.tarif.panjang)) * 0.1);
-                    console.log($scope.model);
-                    console.log($scope.tarif);
-                    if(res.length>0){
-                        $("#tarifId").modal("hide");
-                        $("#jadwalInfo").modal("show");
-                    }else{
-                        message.info("Jadwal Siaran Penuh Silahkan Pilih Tanggal Lain");
-                        $("#jadwalInfo").modal("hide");
-                        $("#tarifId").modal('show');
-                    }
-                    
-                })
-            }
-        }else{
+        if (set == 'Info') {
+            var param = angular.copy($scope.model);
+            param.tanggalmulai = param.tanggalmulai.getFullYear() + "-" + (param.tanggalmulai.getMonth() + 1) + "-" + param.tanggalmulai.getDate();
+            param.tanggalselesai = param.tanggalselesai.getFullYear() + "-" + (param.tanggalselesai.getMonth() + 1) + "-" + param.tanggalselesai.getDate();
+            pasangIklanServices.getJadwal(param).then(res => {
+                var itemharga = $scope.cekHarga($scope.model, res.length);
+                $scope.jadwals = $scope.grouptanggal(res);
+                $scope.tarif.panjang = res.length;
+                $scope.tarif.durasi = itemharga.durasi;
+                $scope.tarif.harga = itemharga.harga;
+                $scope.model.idorder = Date.now();
+                $scope.model.tarifid = itemharga.itemharga.id;
+                $scope.model.biaya = (itemharga.harga * ($scope.tarif.panjang)) + ((itemharga.harga * ($scope.tarif.panjang)) * 0.1);
+                console.log($scope.model);
+                console.log($scope.tarif);
+                if (res.length > 0) {
+                    $("#tarifId").modal("hide");
+                    $("#jadwalInfo").modal("show");
+                } else {
+                    message.info("Jadwal Siaran Penuh Silahkan Pilih Tanggal Lain");
+                    $("#jadwalInfo").modal("hide");
+                    $("#tarifId").modal('show');
+                }
+
+            })
+        } else {
             $("#jadwalInfo").modal("hide");
             $("#invoice").modal("show");
         }
     }
 
-    $scope.cekHarga = (model) => {
-        var lamasiar = model.tanggalselesai.getTime() - model.tanggalmulai.getTime();
-        var lamasiar = lamasiar / (1000 * 3600 * 24);
+    $scope.cekHarga = (model, lamasiar) => {
         var harga = {};
         var item = $scope.harga.filter(x => x.kategori == $scope.tarif.kategori && x.jenis == $scope.tarif.jenis);
         item.forEach(element => {
             var uraian = element.uraian.split(" Spot");
             uraian = uraian[0].split("-");
-            if (parseInt(uraian[0]) < (lamasiar * $scope.model.waktu.length) && parseInt(uraian[1]) >= (lamasiar * $scope.model.waktu.length)) {
+            var n1 = parseInt(uraian[0]);
+            var n2 = parseInt(uraian[1]);
+            if (n1 <= lamasiar && n2 >= lamasiar) {
                 harga = element;
             }
         });
@@ -320,22 +325,22 @@ function UserController($scope, $http, helperServices, userServices, message) {
     $scope.datas = [];
     $scope.model = {};
     userServices.get().then(res => {
-        $scope.datas = res;
-        console.log(res);
-    })
-    // $scope.edit = () => {
-    //     $scope.model = angular.copy($scope.datas);
-    //     $("#editProfile").modal('show');
-    // }
-    // $scope.save = (param) => {
-    //     message.dialog("Anda yakin ???", "Ya", "Tidak").then(x => {
-    //         profileServices.put(param).then(res => {
-    //             message.info("Berhasil");
-    //             $("#editProfile").modal('hide');
-    //             $scope.model = {};
-    //         })
-    //     })
-    // }
+            $scope.datas = res;
+            console.log(res);
+        })
+        // $scope.edit = () => {
+        //     $scope.model = angular.copy($scope.datas);
+        //     $("#editProfile").modal('show');
+        // }
+        // $scope.save = (param) => {
+        //     message.dialog("Anda yakin ???", "Ya", "Tidak").then(x => {
+        //         profileServices.put(param).then(res => {
+        //             message.info("Berhasil");
+        //             $("#editProfile").modal('hide');
+        //             $scope.model = {};
+        //         })
+        //     })
+        // }
 }
 
 function orderController($scope, $http, helperServices, orderServices, message, $sce) {
@@ -346,21 +351,21 @@ function orderController($scope, $http, helperServices, orderServices, message, 
         $scope.datas = res;
         console.log(res);
     })
-    $scope.jadwal = (param)=>{
+    $scope.jadwal = (param) => {
         $scope.infoOrder = param;
         $scope.jadwals = $scope.grouptanggal(param.jadwal);
         $("#jadwalsiaran").modal("show");
     }
     $scope.files = "";
-    $scope.detailOrder = (item)=>{
+    $scope.detailOrder = (item) => {
         $scope.infoOrder = item;
-        $scope.$applyAsync(x=>{
+        $scope.$applyAsync(x => {
             $scope.files = $sce.trustAsResourceUrl(helperServices.url + "img/file/" + item.kontent);
         })
         $("#detailOrder").modal("show");
     }
 
-    $scope.print = ()=>{
+    $scope.print = () => {
         $.LoadingOverlay("show");
         $("#print").printArea();
         setTimeout(() => {
@@ -368,15 +373,15 @@ function orderController($scope, $http, helperServices, orderServices, message, 
         }, 1000);
     }
 
-    $scope.grouptanggal = (data)=>{
+    $scope.grouptanggal = (data) => {
         $scope.total = 0;
         var newArray = [];
-        var dataTanggal="";
+        var dataTanggal = "";
         data.forEach(element => {
-            if(dataTanggal != element.tanggal){
-                var item = {tanggal: element.tanggal}
+            if (dataTanggal != element.tanggal) {
+                var item = { tanggal: element.tanggal }
                 newArray.push(item);
-                dataTanggal=element.tanggal;
+                dataTanggal = element.tanggal;
             }
         });
 
@@ -384,9 +389,9 @@ function orderController($scope, $http, helperServices, orderServices, message, 
             element.pagi = '-';
             element.siang = '-';
             element.sore = '-';
-            var item = data.filter(x=>x.tanggal==element.tanggal);
+            var item = data.filter(x => x.tanggal == element.tanggal);
             item.forEach(element1 => {
-                element1.waktu=='Pagi' ? element.pagi = element1.waktu: element1.waktu == 'Siang' ? element.siang=element1.waktu : element1.waktu == 'Sore' ? element.sore = element1.waktu : '-';
+                element1.waktu == 'Pagi' ? element.pagi = element1.waktu : element1.waktu == 'Siang' ? element.siang = element1.waktu : element1.waktu == 'Sore' ? element.sore = element1.waktu : '-';
             });
             element.panjang = item.length;
             $scope.total += element.panjang;
@@ -394,4 +399,3 @@ function orderController($scope, $http, helperServices, orderServices, message, 
         return newArray;
     }
 }
-

@@ -2,10 +2,9 @@
 
 namespace App\Controllers;
 
-use CodeIgniter\API\ResponseTrait;
 use App\Controllers\BaseController;
+use CodeIgniter\API\ResponseTrait;
 use Google\Client as Google_Client;
-use Google_Service_Oauth2;
 
 class Profile extends BaseController
 {
@@ -42,10 +41,10 @@ class Profile extends BaseController
                 $user_data = array(
                     'login_oauth_uid' => $data['id'],
                     'first_name' => $data['given_name'],
-                    'last_name'  => $data['family_name'],
+                    'last_name' => $data['family_name'],
                     'email' => $data['email'],
                     'profile_picture' => $data['picture'],
-                    'updated_at' => $current_datetime
+                    'updated_at' => $current_datetime,
                 );
                 $this->userModel->updateUserGoogle($user_data, $this->session->get('id'));
                 $user_data['logged_in'] = true;
@@ -72,11 +71,11 @@ class Profile extends BaseController
 
     public function update()
     {
-        $data = (array)$this->request->getJSON();
-        $result = $this->userModel->update($data['id'],[
-            'fullname'=> $data['fullname'],
+        $data = (array) $this->request->getJSON();
+        $result = $this->userModel->update($data['id'], [
+            'fullname' => $data['fullname'],
             'kontak' => $data['kontak'],
-            'alamat' => $data['alamat']
+            'alamat' => $data['alamat'],
         ]);
         return $this->respond($result);
     }

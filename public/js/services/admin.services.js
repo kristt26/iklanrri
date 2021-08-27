@@ -5,8 +5,7 @@ angular.module('admin.service', [])
     .factory('pasangIklanServices', pasangIklanServices)
     .factory('profileServices', profileServices)
     .factory('userServices', userServices)
-    .factory('orderServices', orderServices)
-    ;
+    .factory('orderServices', orderServices);
 
 
 function dashboardServices($http, $q, StorageService, $state, helperServices, AuthService) {
@@ -250,10 +249,15 @@ function tarifServices($http, $q, helperServices, AuthService, message) {
             headers: AuthService.getHeader()
         }).then(
             (res) => {
-                var data = service.data.find(x => x.id == params.id);
-                if (data) {
-                    data.layanan = params.layanan;
-                    data.status = params.status;
+                var layanan = service.data.find(x => x.id == params.layananid);
+                var kategori = layanan.kategori.find(x => x.kategori == params.kategori);
+                var tarif = kategori.tarif.find(x => x.id == params.id);
+                if (tarif) {
+                    tarif.jenis = params.jenis;
+                    tarif.kategori = params.kategori;
+                    tarif.satuan = params.satuan;
+                    tarif.tarif = params.tarif;
+                    tarif.uraian = params.uraian;
                 }
                 def.resolve(res.data);
             },
@@ -273,8 +277,11 @@ function tarifServices($http, $q, helperServices, AuthService, message) {
             headers: AuthService.getHeader()
         }).then(
             (res) => {
-                var index = service.data.indexOf(param);
-                service.data.splice(index, 1);
+                var layanan = service.data.find(x => x.id == param.layananid);
+                var kategori = layanan.kategori.find(x => x.kategori == param.kategori);
+                var tarif = kategori.tarif.find(x => x.id == param.id);
+                var index = kategori.tarif.indexOf(param);
+                kategori.tarif.splice(index, 1);
                 def.resolve(res.data);
             },
             (err) => {
@@ -285,6 +292,7 @@ function tarifServices($http, $q, helperServices, AuthService, message) {
         return def.promise;
     }
 }
+
 function pasangIklanServices($http, $q, helperServices, AuthService, message) {
     var controller = helperServices.url + 'iklan/';
     var service = {};

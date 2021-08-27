@@ -4,11 +4,12 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>AdminLTE 3 | Advanced form elements</title>
-
+    <title>Sistem Pemasangan Iklan</title>
+    <link rel="icon" href="../../dist/img/favicon.ico" type="image/gif">
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <link rel="stylesheet" href="../../plugins/fontawesome-free/css/all.min.css">
+    <!-- <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css"> -->
     <link rel="stylesheet" href="../../plugins/daterangepicker/daterangepicker.css">
     <link rel="stylesheet" href="../../plugins/icheck-bootstrap/icheck-bootstrap.min.css">
     <link rel="stylesheet" href="../../plugins/bootstrap-colorpicker/css/bootstrap-colorpicker.min.css">
@@ -22,8 +23,7 @@
     <link rel="stylesheet" href="../../dist/css/script.css">
     <!-- <link rel="stylesheet" href="../../libs/angular-datatables/dist/css/angular-datatables.css"> -->
     <link rel="stylesheet" href="//cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css">
-    <script type="text/javascript" src="https://app.sandbox.midtrans.com/snap/snap.js"
-        data-client-key="SB-Mid-client-fs8aESL27KVF4nQ-"></script>
+
     <script src="../../plugins/jquery/jquery.min.js"></script>
 
     <style>
@@ -69,8 +69,8 @@
 
 <body class="hold-transition sidebar-mini navbar-fixed">
     <div class="wrapper">
-        <?= $header?>
-        <?= $sidebar?>
+        <?=$header?>
+        <?=$sidebar?>
         <div class="content-wrapper">
             <section class="content-header">
                 <div class="container-fluid">

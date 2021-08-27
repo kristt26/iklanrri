@@ -1,6 +1,6 @@
 <div class="row" ng-controller="tarifController">
     <div class="col-md-12">
-        <div class="card card-danger">
+        <div class="card card-rri">
             <div class="card-header">
                 <h3 class="card-title"><i class="fas fa-th-list"></i>&nbsp;&nbsp; Data Tarif</h3>
                 <div class="card-tools">
@@ -60,10 +60,10 @@
                                                                 <td>{{tariff.tarif}}</td>
                                                                 <td>
                                                                     <button type="button" class="btn btn-warning btn-sm"
-                                                                        ng-click="edit(item)"><i
+                                                                        ng-click="edit(tariff)"><i
                                                                             class="fas fa-edit"></i></button>
                                                                     <button type="button" class="btn btn-danger btn-sm"
-                                                                        ng-click="delete(item)"><i
+                                                                        ng-click="delete(tariff)"><i
                                                                             class="fas fa-trash"></i></button>
                                                                 </td>
                                                             </tr>
@@ -96,7 +96,7 @@
                     <div class="modal-body">
                         <div class="form-group">
                             <label for="layanan" class="col-form-label col-form-label-sm">Layanan</label>
-                            <select id="layanan" class="form-control form-control-sm select2" ng-options="item as item.layanan for item in layanans"
+                            <select ng-disabled = "model.id" id="layanan" class="form-control form-control-sm select2" ng-options="item as item.layanan for item in layanans"
                                 ng-model="layanan" required ng-change="model.layananid = layanan.id"></select>
                         </div>
                         <div class="form-group" ng-if="layanan">
