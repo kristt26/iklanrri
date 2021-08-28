@@ -42,8 +42,7 @@ class Order extends BaseController
     public function update()
     {
         $data = (array) $this->request->getJSON();
-        $result = $this->layanan->update($data['id'], [
-            'layanan' => $data['layanan'],
+        $result = $this->iklan->update($data['id'], [
             'status' => (int) $data['status'],
         ]);
         return $this->respond($result);
@@ -52,5 +51,11 @@ class Order extends BaseController
     public function delete($id)
     {
         return $this->respond($this->layanan->delete($id));
+    }
+
+    public function readTayang()
+    {
+        $result = $this->iklan->iklanTayang();
+        return $this->respond($result);
     }
 }

@@ -7,10 +7,12 @@
     <div class="sidebar">
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
             <div class="image">
-                <img src="<?=isset($_SESSION['profile_picture']) ? $_SESSION['profile_picture'] : '../../dist/img/avatar6.png'?>" class="img-circle elevation-2" alt="User Image">
+                <img src="<?=isset($_SESSION['profile_picture']) ? $_SESSION['profile_picture'] : '../../dist/img/avatar6.png'?>"
+                    class="img-circle elevation-2" alt="User Image">
             </div>
             <div class="info">
-                <a href="<?=base_url('profile')?>" class="d-block"><?=isset($_SESSION['nama']) ? $_SESSION['nama'] : $_SESSION['fullname']?></a>
+                <a href="<?=base_url('profile')?>"
+                    class="d-block"><?=isset($_SESSION['nama']) ? $_SESSION['nama'] : $_SESSION['fullname']?></a>
             </div>
         </div>
         <nav class="mt-2">
@@ -43,10 +45,45 @@
                     </a>
                 </li>
                 <li class="nav-item">
+                    <a href="<?=base_url('admin/statusbayar')?>" class="nav-link">
+                        <i class="nav-icon fas fa-money-bill"></i>
+                        <p>Status Pembayaran</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="<?=base_url('admin/iklantayang')?>" class="nav-link">
+                        <i class="nav-icon fas fa-list"></i>
+                        <p>Iklan Tayang</p>
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a href="<?=base_url('admin/jadwal')?>" class="nav-link">
                         <i class="nav-icon fas fa-calendar"></i>
                         <p>Jadwal Siaran</p>
                     </a>
+                </li>
+                <li class="nav-item">
+                    <a href="javascript:void()" class="nav-link">
+                        <i class="nav-icon fas fa-file"></i>
+                        <p>
+                            Laporan
+                            <i class="fas fa-angle-left right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="<?=base_url('admin/laporan/iklan')?>" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Pemasangan Iklan</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="<?=base_url('admin/laporan/pendapatan')?>" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Pendapatan</p>
+                            </a>
+                        </li>
+                    </ul>
                 </li>
                 <?php endif;?>
 
@@ -98,6 +135,12 @@
                     <a href="<?=base_url('siaran/jadwal')?>" class="nav-link">
                         <i class="nav-icon fas fa-calendar"></i>
                         <p>Jadwal Siaran</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="<?=base_url('siaran/iklantayang')?>" class="nav-link">
+                        <i class="nav-icon fas fa-list"></i>
+                        <p>Iklan Tayang</p>
                     </a>
                 </li>
                 <?php endif;?>

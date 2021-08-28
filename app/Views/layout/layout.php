@@ -9,7 +9,7 @@
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <link rel="stylesheet" href="../../plugins/fontawesome-free/css/all.min.css">
-    <!-- <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css"> -->
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     <link rel="stylesheet" href="../../plugins/daterangepicker/daterangepicker.css">
     <link rel="stylesheet" href="../../plugins/icheck-bootstrap/icheck-bootstrap.min.css">
     <link rel="stylesheet" href="../../plugins/bootstrap-colorpicker/css/bootstrap-colorpicker.min.css">
@@ -140,6 +140,9 @@
     <script src="../../libs/loading/dist/loadingoverlay.min.js"></script>
     <script src="../../libs/calendar/main.min.js"></script>
     <script src="../../libs/calendar/locales-all.min.js"></script>
+    <script>
+        
+    </script>
 </body>
 
 </html>

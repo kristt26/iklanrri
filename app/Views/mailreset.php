@@ -133,7 +133,7 @@
                         <td bgcolor="#ffffff" align="left"
                             style="padding: 20px 30px 40px 30px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 400; line-height: 25px;">
                             Informasi Reset Password <br>
-                            <table width="30%" style="font-size: 14px;">
+                            <table width="75%" style="font-size: 14px;">
                                 <tr><td>Nama</td><td>:</td><td><?=$fullname?></td></tr>
                                 <tr><td>Username</td><td>:</td><td><?=$username?></td></tr>
                                 <tr><td>Email</td><td>:</td><td><?=$email?></td></tr>

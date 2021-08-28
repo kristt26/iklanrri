@@ -1,8 +1,8 @@
-<div class="row" ng-controller="orderController">
+<div class="row" ng-controller="iklanTayangController">
     <div class="col-md-12">
         <div class="card card-rri">
             <div class="card-header">
-                <h3 class="card-title"><i class="fas fa-th-list"></i>&nbsp;&nbsp; Data Order</h3>
+                <h3 class="card-title"><i class="fas fa-th-list"></i>&nbsp;&nbsp; Iklan Tayang</h3>
             </div>
             <div class="card-body table-responsive p-0">
                 <table datatable="ng" class="table table-sm table-hover table-head-fixed text-nowrap">
@@ -30,8 +30,6 @@
                                         class="fas fa-calendar"></i></button>
                                 <button type="button" class="btn btn-primary btn-sm" ng-click="detailOrder(item)"><i
                                         class="fas fa-eye"></i></button>
-                                <button type="button" class="btn btn-warning btn-sm" ng-click="edit(item)"><i
-                                        class="fas fa-check"></i></button>
                             </td>
                         </tr>
                     </tbody>
@@ -165,7 +163,8 @@
                                 <div class="form-group row">
                                     <label for="periode" class="col-sm-4 col-form-label">Periode Siaran</label>
                                     <div class="col-sm-8">
-                                        <label for="periode" class="col-form-label">{{infoOrder.tanggalmulai}} s/d {{infoOrder.tanggalselesai}}</label>
+                                        <label for="periode" class="col-form-label">{{infoOrder.tanggalmulai}} s/d
+                                            {{infoOrder.tanggalselesai}}</label>
                                     </div>
                                 </div>
                                 <div class="form-group" ng-if="infoOrder.jeniskontent=='File'">
@@ -179,7 +178,8 @@
                                 <div class="form-group row" ng-if="infoOrder.jeniskontent=='Text'">
                                     <label for="kontenttext" class="col-sm-4 col-form-label">Periode Siaran</label>
                                     <div class="col-sm-8">
-                                        <textarea id="kontenttext" readonly class="form-control-plaintext" cols="5" ng-model="infoOrder.kontent"></textarea>
+                                        <textarea id="kontenttext" readonly class="form-control-plaintext" cols="5"
+                                            ng-model="infoOrder.kontent"></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -227,36 +227,6 @@
                     <div class="mr-auto p-2"> <button type="button" class="btn btn-secondary"
                             data-dismiss="modal">Close</button></div>
                 </div>
-            </div>
-        </div>
-    </div>
-    <div class="modal fade" id="editItem" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <form role="form" ng-submit="save(model)">
-                    <div class="modal-header bg-rri">
-                        <h5 class="modal-title">Proses Order</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="form-group">
-                            <label for="kategori" class="col-form-label col-form-label-sm">Set Status</label>
-                            <select id="kategori" class="form-control form-control-sm" ng-model="model.status"
-                                required>
-                                <option value="">---Pilih---</option>
-                                <option value="0">Tidak Aktif</option>
-                                <option value="1">Tayang</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Close</button>
-                        <button type="submit"
-                            class="btn btn-primary btn-sm pull-right">{{simpan ? 'Simpan': 'Ubah'}}</button>
-                    </div>
-                </form>
             </div>
         </div>
     </div>

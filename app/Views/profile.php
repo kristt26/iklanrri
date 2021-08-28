@@ -17,8 +17,9 @@
                                         class="rounded-circle" width="150">
                                     <div class="mt-3">
                                         <h4>{{datas.fullname}}</h4>
-                                        <a ng-if="!datas.login_oauth_uid" href="<?= $loginButton?>" class="btn btn-secondary"><svg enable-background="new 0 0 512 512" width="24"
-                                                height="24" id="Layer_1" version="1.1" viewBox="0 0 512 512"
+                                        <a ng-if="!datas.login_oauth_uid" href="<?= $loginButton?>"
+                                            class="btn btn-secondary"><svg enable-background="new 0 0 512 512"
+                                                width="24" height="24" id="Layer_1" version="1.1" viewBox="0 0 512 512"
                                                 xml:space="preserve" xmlns="http://www.w3.org/2000/svg"
                                                 xmlns:xlink="http://www.w3.org/1999/xlink">
                                                 <g>
@@ -111,6 +112,7 @@
                                 <div class="row">
                                     <div class="col-sm-12">
                                         <a class="btn btn-info " ng-click="edit()">Edit</a>
+                                        <a class="btn btn-warning " ng-click="reset()">Reset Password</a>
                                     </div>
                                 </div>
                             </div>
@@ -142,14 +144,47 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="alamat" class="col-form-label col-form-label-sm">Alamat</label>
-                                        <textarea class="form-control  form-control-sm" id="alamat" cols="4" ng-model="model.alamat"></textarea>
+                                        <textarea class="form-control  form-control-sm" id="alamat" cols="4"
+                                            ng-model="model.alamat"></textarea>
                                     </div>
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary btn-sm"
                                         data-dismiss="modal">Close</button>
-                                    <button type="submit"
-                                        class="btn btn-primary btn-sm pull-right">Ubah</button>
+                                    <button type="submit" class="btn btn-primary btn-sm pull-right">Ubah</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <!-- Modal -->
+                <div class="modal fade" id="showReset" tabindex="-1" role="dialog" aria-labelledby="modelTitleId"
+                    aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <form role="form" ng-submit="resetPassword(model)">
+                                <div class="modal-header bg-rri">
+                                    <h5 class="modal-title">Reset Password</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="form-group">
+                                        <label for="oldPass" class="col-form-label col-form-label-sm">Old Password</label>
+                                        <input type="password" class="form-control  form-control-sm" id="oldPass"
+                                            ng-model="model.password" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="newpass" class="col-form-label col-form-label-sm">New Password</label>
+                                        <input type="password" class="form-control  form-control-sm" id="newpass"
+                                            ng-model="model.newpass" required>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary btn-sm"
+                                        data-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-primary btn-sm pull-right">Ubah</button>
                                 </div>
                             </form>
                         </div>
@@ -207,27 +242,28 @@
 .shadow-none {
     box-shadow: none !important;
 }
+
 .bg-rri {
-  background-color: #00a8e6 !important;
+    background-color: #00a8e6 !important;
 }
 
-.bg-rri > .card-header .btn-tool,
-.bg-gradient-danger > .card-header .btn-tool,
-.card-danger:not(.card-outline) > .card-header .btn-tool {
-  color: rgba(255, 255, 255, 0.8);
+.bg-rri>.card-header .btn-tool,
+.bg-gradient-danger>.card-header .btn-tool,
+.card-danger:not(.card-outline)>.card-header .btn-tool {
+    color: rgba(255, 255, 255, 0.8);
 }
 
-.bg-rri > .card-header .btn-tool:hover,
-.bg-gradient-danger > .card-header .btn-tool:hover,
-.card-danger:not(.card-outline) > .card-header .btn-tool:hover {
-  color: #fff;
+.bg-rri>.card-header .btn-tool:hover,
+.bg-gradient-danger>.card-header .btn-tool:hover,
+.card-danger:not(.card-outline)>.card-header .btn-tool:hover {
+    color: #fff;
 }
 
 .card.bg-rri .bootstrap-datetimepicker-widget .table td,
 .card.bg-rri .bootstrap-datetimepicker-widget .table th,
 .card.bg-gradient-danger .bootstrap-datetimepicker-widget .table td,
 .card.bg-gradient-danger .bootstrap-datetimepicker-widget .table th {
-  border: none;
+    border: none;
 }
 
 .card.bg-rri .bootstrap-datetimepicker-widget table thead tr:first-child th:hover,
@@ -240,20 +276,20 @@
 .card.bg-gradient-danger .bootstrap-datetimepicker-widget table td.hour:hover,
 .card.bg-gradient-danger .bootstrap-datetimepicker-widget table td.minute:hover,
 .card.bg-gradient-danger .bootstrap-datetimepicker-widget table td.second:hover {
-  background-color: #c62232;
-  color: #fff;
+    background-color: #c62232;
+    color: #fff;
 }
 
 .card.bg-rri .bootstrap-datetimepicker-widget table td.today::before,
 .card.bg-gradient-danger .bootstrap-datetimepicker-widget table td.today::before {
-  border-bottom-color: #fff;
+    border-bottom-color: #fff;
 }
 
 .card.bg-rri .bootstrap-datetimepicker-widget table td.active,
 .card.bg-rri .bootstrap-datetimepicker-widget table td.active:hover,
 .card.bg-gradient-danger .bootstrap-datetimepicker-widget table td.active,
 .card.bg-gradient-danger .bootstrap-datetimepicker-widget table td.active:hover {
-  background-color: #e4606d;
-  color: #fff;
+    background-color: #e4606d;
+    color: #fff;
 }
             </style>
