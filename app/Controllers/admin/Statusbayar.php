@@ -35,7 +35,6 @@ class Statusbayar extends BaseController
             `iklan`.`jeniskontent`,
             `iklan`.`kontent`,
             `iklan`.`tarifid`,
-            `iklan`.`pemesanid`,
             `iklan`.`status`,
             `iklan`.`tanggal`,
             `iklan`.`userid`,
