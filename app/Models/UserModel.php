@@ -59,6 +59,25 @@ class UserModel extends Model
                 'roleid' => $roleid,
             ];
             $this->db->table('userinrole')->insert($roleuser);
+            $user = [
+                "username" => "Pimpinan",
+                "password" => base64_encode($this->encrypter->encrypt("Admin@123")),
+                "email" => "pimpinan@mail.com",
+                "fullname" => "Pimpinan",
+                "status" => "1",
+            ];
+            $this->db->table('user')->insert($user);
+            $userid = $this->db->insertID();
+            $role = [
+                "role" => "Pimpinan",
+            ];
+            $this->db->table('role')->insert($role);
+            $roleid = $this->db->insertID();
+            $roleuser = [
+                'userid' => $userid,
+                'roleid' => $roleid,
+            ];
+            $this->db->table('userinrole')->insert($roleuser);
             $role = [
                 "role" => "Pemesan",
             ];

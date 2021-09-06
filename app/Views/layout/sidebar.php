@@ -86,6 +86,39 @@
                     </ul>
                 </li>
                 <?php endif;?>
+                <?php if (session()->get('role') == "Pimpinan"): ?>
+                <li class="nav-item">
+                    <a href="<?=base_url('admin/home')?>" class="nav-link">
+                        <i class="nav-icon fas fa-home"></i>
+                        <p>
+                            Dashboard
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="javascript:void()" class="nav-link">
+                        <i class="nav-icon fas fa-file"></i>
+                        <p>
+                            Laporan
+                            <i class="fas fa-angle-left right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="<?=base_url('admin/laporan/iklan')?>" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Pemasangan Iklan</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="<?=base_url('admin/laporan/pendapatan')?>" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Pendapatan</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <?php endif;?>
 
                 <!-- Menu Pemesan -->
 

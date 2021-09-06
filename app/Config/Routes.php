@@ -50,6 +50,9 @@ $routes->get('/jadwal', 'Jadwal::index', ['filter' => 'auth']);
 $routes->get('/siaran/home', 'siaran/Home::index', ['filter' => 'auth']);
 $routes->get('/siaran/order', 'siaran/Order::index', ['filter' => 'auth']);
 $routes->get('/siaran/iklantayang', 'admin/Iklantayang::index', ['filter' => 'auth']);
+$routes->get('/pimpinan/home', 'pimpinan/Home::index', ['filter' => 'auth']);
+$routes->get('/pimpinan/laporan/iklan', 'pimpinan/Laporan::iklan', ['filter' => 'auth']);
+$routes->get('/pimpinan/laporan/pendapatan', 'pimpinan/Laporan::pendapatan', ['filter' => 'auth']);
 
 // $routes->get('/home/getHome', 'Home::getHome', ['filter' => 'auth']);
 

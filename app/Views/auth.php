@@ -84,6 +84,8 @@
                     document.location.href = helperServices.url + 'admin/home';
                 else if (res.data.role == 'Siaran')
                     document.location.href = helperServices.url + 'siaran/home';
+                else if (res.data.role == 'Pimpinan')
+                    document.location.href = helperServices.url + 'pimpinan/home';
                 else
                     document.location.href = helperServices.url + 'home';
                 // document.location.href = helperServices.url;
