@@ -12,7 +12,7 @@ class Home extends BaseController
 		$data['datamenu'] = ['menu'=>"Dashboard"];
 		$data['sidebar'] = view('layout/sidebar');
 		$data['header'] = view('layout/header');
-		$data['content'] = "";
+		$data['content'] = view('home');
 		return view('layout/layout', $data);
 	}
 }
