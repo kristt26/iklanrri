@@ -68,7 +68,7 @@
     </style>
 </head>
 
-<body class="hold-transition sidebar-mini navbar-fixed">
+<body class="hold-transition sidebar-mini navbar-fixed layout-navbar-fixed layout-fixed">
     <div class="wrapper">
         <?=$header?>
         <?=$sidebar?>
@@ -141,7 +141,7 @@
     <script src="../../libs/calendar/main.min.js"></script>
     <script src="../../libs/calendar/locales-all.min.js"></script>
     <script>
-        
+
     </script>
 </body>
 

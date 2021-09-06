@@ -10,7 +10,8 @@ angular.module('adminctrl', [])
     .controller('jadwalController', jadwalController)
     .controller('laporanIklanController', laporanIklanController)
     .controller('statusBayarController', statusBayarController)
-    .controller('iklanTayangController', iklanTayangController);
+    .controller('iklanTayangController', iklanTayangController)
+    .controller('homeGuestController', homeGuestController);
 
 function pageController($scope, helperServices) {
     $scope.Title = "Page Header";
@@ -357,19 +358,23 @@ function pasangIklanController($scope, $http, helperServices, pasangIklanService
     $scope.cekHarga = (model, lamasiar) => {
         var harga = {};
         var item = $scope.harga.filter(x => x.kategori == $scope.tarif.kategori && x.jenis == $scope.tarif.jenis);
-        item.forEach(element => {
-            var uraian = element.uraian.split(" Spot");
-            if (uraian.length > 1) {
-                uraian = uraian[0].split("-");
-                var n1 = parseInt(uraian[0]);
-                var n2 = parseInt(uraian[1]);
-                if (n1 <= lamasiar && n2 >= lamasiar) {
+        if (lamasiar > 100) {
+            harga = item.find(x=>x.uraian==">100 Kali" || x.uraian==">101 Kali");
+        }else{
+            item.forEach(element => {
+                var uraian = element.uraian.split(" Spot");
+                if (uraian.length > 1) {
+                    uraian = uraian[0].split("-");
+                    var n1 = parseInt(uraian[0]);
+                    var n2 = parseInt(uraian[1]);
+                    if (n1 <= lamasiar && n2 >= lamasiar) {
+                        harga = element;
+                    }
+                } else {
                     harga = element;
                 }
-            } else {
-                harga = element;
-            }
-        });
+            });
+        }
         return { harga: parseFloat(harga.tarif), durasi: lamasiar, itemharga: harga };
     }
 
@@ -756,4 +761,22 @@ function iklanTayangController($scope, $http, helperServices, orderServices, mes
         });
         return newArray;
     }
+}
+
+function homeGuestController($scope, helperServices, homeGuestServices, message, $sce) {
+    $scope.$emit("SendUp", "Layanan");
+    $scope.datas = [];
+    $scope.model = {};
+    homeGuestServices.get().then(res => {
+        $scope.datas = res;
+        $scope.spot = $scope.datas.find(x=>x.layanan=='Spot Iklan');
+        $scope.pengumuman = $scope.datas.find(x=>x.layanan=='Pengumuman');
+        console.log($scope.pengumuman);
+        $scope.spotNonPrime = $scope.spot.kategori[0].dataKategori[0].data;
+        $scope.spotNonReguler = $scope.spot.kategori[0].dataKategori[1].data;
+        $scope.spotKomPrime = $scope.spot.kategori[1].dataKategori[0].data;
+        $scope.spotKomReguler = $scope.spot.kategori[1].dataKategori[1].data;
+        $scope.pengNon = $scope.pengumuman.kategori[0].dataKategori;
+        $scope.pengKom = $scope.pengumuman.kategori[1].dataKategori;
+    })
 }

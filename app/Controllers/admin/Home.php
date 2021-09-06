@@ -6,7 +6,7 @@ use CodeIgniter\API\ResponseTrait;
 class Home extends BaseController
 {
     use ResponseTrait;
-	public $data;
+    public $data;
     public function __construct()
     {
         $this->data = new \App\Models\HomeModel();
@@ -15,8 +15,8 @@ class Home extends BaseController
 
     public function index()
     {
-		$result = $this->data->getData();
-		
+        $result = $this->data->getData();
+
         $data['datamenu'] = ['menu' => "Dashboard"];
         $data['sidebar'] = view('layout/sidebar');
         $data['header'] = view('layout/header');
@@ -29,6 +29,6 @@ class Home extends BaseController
         $result = $this->iklan->query("SELECT month(tanggal) as stringbln, count(*) as jumlah
             from iklan WHERE year(tanggal) = year(curdate())
             group by month(tanggal)")->getResultArray();
-            return $this->respond($result);
+        return $this->respond($result);
     }
 }

@@ -9,7 +9,8 @@ angular.module('admin.service', [])
     .factory('orderServices', orderServices)
     .factory('jadwalServices', jadwalServices)
     .factory('laporanServices', laporanServices)
-    .factory('statusBayarServices', statusBayarServices);
+    .factory('statusBayarServices', statusBayarServices)
+    .factory('homeGuestServices', homeGuestServices);
 
 
 function dashboardServices($http, $q, $state, helperServices, AuthService) {
@@ -789,5 +790,36 @@ function statusBayarServices($http, $q, helperServices, AuthService, message) {
         );
         return def.promise;
     }
+}
+
+function homeGuestServices($http, $q, helperServices, AuthService) {
+    var controller = helperServices.url + 'home';
+    var service = {};
+    service.data = [];
+    return {
+        get: get
+    };
+
+    function get() {
+        var def = $q.defer();
+        if (service.instance) {
+            def.resolve(service.data);
+        } else {
+            $http({
+                method: 'get',
+                url: controller + "/getHome",
+                headers: AuthService.getHeader()
+            }).then(
+                (res) => {
+                    def.resolve(res.data);
+                },
+                (err) => {
+                    def.reject(err);
+                }
+            );
+        }
+        return def.promise;
+    }
+
 }
 

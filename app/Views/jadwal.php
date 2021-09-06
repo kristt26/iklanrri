@@ -47,6 +47,11 @@
                 </div>
             </div> -->
     <div class="col-md-12">
+
+        <!-- item.length > 0 && item.length < 5 ? 'green' : item.length> 4 && item.length < 10 ? 'yellow' : item.length> 9 &&
+                item.length < 15 ? 'orange' : item.length==15 ? '#dc3545' : '' -->
+    </div>
+    <div class="col-md-12">
         <div class="row">
             <div class="col-12 col-sm-12">
                 <div class="card card-primary card-outline card-tabs">
@@ -67,6 +72,37 @@
                         </ul>
                     </div>
                     <div class="card-body">
+                        <p>
+                            Keterangan Warna:
+                        </p>
+                        <div class="form-group">
+
+
+                            <div class="input-group my-colorpicker2">
+                                <div class="input-group-append">
+                                    <p style="color: #ffffff"><i class="fas fa-square"></i></p>
+                                </div>
+                                <label>&nbsp; Tidak ada iklan </label> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <div class="input-group-append">
+                                    <p style="color: #b3d9b3"><i class="fas fa-square"></i></p>
+                                </div>
+                                <label>&nbsp; 0 s/d 4 Iklan </label> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <div class="input-group-append">
+                                    <p style="color: #fffdb3"><i class="fas fa-square"></i></p>
+                                </div>
+                                <label>&nbsp; 5 s/d 9 Iklan </label> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <div class="input-group-append">
+                                    <p style="color: orange"><i class="fas fa-square"></i></p>
+                                </div>
+                                <label>&nbsp; 10 s/d 14 Iklan </label> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <div class="input-group-append">
+                                    <p style="color: red"><i class="fas fa-square"></i></p>
+                                </div>
+                                <label>&nbsp; Iklan penuh </label> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            </div>
+                            <!-- /.input group -->
+                        </div>
+                        <!-- Putih =Tidak Ada Iklan, Hijau = 0 s/d 4 Iklan -->
                         <div class="tab-content" id="custom-tabs-three-tabContent">
                             <div class="tab-pane fade show active" id="custom-tabs-three-home" role="tabpanel"
                                 aria-labelledby="custom-tabs-three-home-tab">

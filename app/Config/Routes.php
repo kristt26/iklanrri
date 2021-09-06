@@ -51,6 +51,8 @@ $routes->get('/siaran/home', 'siaran/Home::index', ['filter' => 'auth']);
 $routes->get('/siaran/order', 'siaran/Order::index', ['filter' => 'auth']);
 $routes->get('/siaran/iklantayang', 'admin/Iklantayang::index', ['filter' => 'auth']);
 
+// $routes->get('/home/getHome', 'Home::getHome', ['filter' => 'auth']);
+
 /*
  * --------------------------------------------------------------------
  * Additional Routing
