@@ -230,4 +230,34 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" id="editItem" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <form role="form" ng-submit="save(model)">
+                    <div class="modal-header bg-rri">
+                        <h5 class="modal-title">Proses Order</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="kategori" class="col-form-label col-form-label-sm">Set Status</label>
+                            <select id="kategori" class="form-control form-control-sm" ng-model="model.status"
+                                required>
+                                <option value="">---Pilih---</option>
+                                <option value="0">Tidak Aktif</option>
+                                <option value="1">Tayang</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Close</button>
+                        <button type="submit"
+                            class="btn btn-primary btn-sm pull-right">{{simpan ? 'Simpan': 'Ubah'}}</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>

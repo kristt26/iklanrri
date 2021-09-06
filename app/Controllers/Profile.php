@@ -17,6 +17,7 @@ class Profile extends BaseController
         $userModel = new \App\Models\UserModel();
         $this->google_client = new \Google_Client();
         $this->userModel = new \App\Models\UserModel();
+        $this->encrypter = \Config\Services::encrypter();
         $this->session = session();
     }
 
@@ -79,4 +80,20 @@ class Profile extends BaseController
         ]);
         return $this->respond($result);
     }
+
+    public function reset()
+    {
+        $data = (array) $this->request->getJSON();
+        $data['username'] = $this->session->get('username');
+        $result = $this->userModel->login($data);
+        if ($result) {
+            $pass = base64_encode($this->encrypter->encrypt($data['newpass']));
+            $id = $result['id'];
+            $this->userModel->query("UPDATE user SET password = '$pass' WHERE id = '$id'");
+            return $this->respond($result);
+        } else {
+            return $this->fail("Password Lama tidak benar");
+        }
+    }
+    
 }

@@ -138,7 +138,7 @@
                                         ng-model="model.kontent" placeholder="Nama uraian" required>
                                 </div>
                                 <div class="form-group" ng-if="model.jeniskontent=='File'">
-                                    <label for="foto" class="col-form-label col-form-label-sm">Kontent File</label>
+                                    <label for="foto" class="col-form-label col-form-label-sm">Upload File (mp3, pdf)</label>
                                     <div class="input-group mb-3">
                                         <div class="custom-file">
                                             <input type="file" class="custom-file-input custom-file-input-sm" id="foto"
@@ -147,10 +147,12 @@
                                             <label class="custom-file-label"
                                                 for="foto">{{model.kontent ? model.kontent.filename: model.foto && !model.kontent ? model.foto: 'Pilih File'}}</label>
                                         </div>
+
                                         <span ng-show="form.model.kontent.$error.maxsize">Files must not exceed 5000
                                             KB</span>
                                     </div>
-                                    <small id="foto" class="form-text text-muted" ng-if="model.foto || model.kontent">
+                                    <small id="emailHelp" class="form-text" style="color:red">Maximum File 5 Mb</small>
+                                    <!-- <small id="foto" class="form-text text-muted" ng-if="model.foto || model.kontent">
                                         ​<picture ng-if="model.foto && !model.kontent">
                                             <source srcset="<?=base_url('public/img/galeri/{{model.foto}}')?>">
                                             <img src="<?=base_url('public/img/galeri/{{model.foto}}')?>"
@@ -161,7 +163,7 @@
                                             <img data-ng-src="data:{{model.kontent.filetype}};base64,{{model.kontent.base64}}"
                                                 class="img-fluid img-thumbnail" alt="..." width="35%">
                                         </picture>
-                                    </small>
+                                    </small> -->
                                     <!-- <div class="col-sm-10">
                                 </div> -->
                                 </div>
@@ -394,13 +396,15 @@
                 <div class="modal-footer">
                     <div class="mr-auto p-2"> <button type="button" class="btn btn-secondary"
                             data-dismiss="modal">Close</button></div>
-                    <button type="button" class="btn btn-success float-right" ng-click="lanjut('pembayaran')">Pembayaran</button>
+                    <button type="button" class="btn btn-success float-right"
+                        ng-click="lanjut('pembayaran')">Pembayaran</button>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-<script type="text/javascript" src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="SB-Mid-client-fs8aESL27KVF4nQ-"></script>
+<script type="text/javascript" src="https://app.sandbox.midtrans.com/snap/snap.js"
+    data-client-key="SB-Mid-client-fs8aESL27KVF4nQ-"></script>
 
 <!-- Button trigger modal -->

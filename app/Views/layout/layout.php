@@ -9,7 +9,7 @@
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <link rel="stylesheet" href="../../plugins/fontawesome-free/css/all.min.css">
-    <!-- <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css"> -->
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     <link rel="stylesheet" href="../../plugins/daterangepicker/daterangepicker.css">
     <link rel="stylesheet" href="../../plugins/icheck-bootstrap/icheck-bootstrap.min.css">
     <link rel="stylesheet" href="../../plugins/bootstrap-colorpicker/css/bootstrap-colorpicker.min.css">
@@ -23,8 +23,9 @@
     <link rel="stylesheet" href="../../dist/css/script.css">
     <!-- <link rel="stylesheet" href="../../libs/angular-datatables/dist/css/angular-datatables.css"> -->
     <link rel="stylesheet" href="//cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css">
-
+    <link rel="stylesheet" href="../../libs/calendar/main.min.css">
     <script src="../../plugins/jquery/jquery.min.js"></script>
+    <script src="../../plugins/jquery-ui/jquery-ui.min.css"></script>
 
     <style>
     .containerr {
@@ -104,6 +105,7 @@
         </aside>
     </div>
 
+    <script src="../../plugins/jquery-ui/jquery-ui.min.js"></script>
     <script src="../../libs/angular/angular.min.js"></script>
     <script src="../../js/apps.js"></script>
     <script src="../../js/services/helper.services.js"></script>
@@ -136,8 +138,11 @@
     <script src="../../dist/js/demo.js"></script>
     <script src="../../dist/js/script.js"></script>
     <script src="../../libs/loading/dist/loadingoverlay.min.js"></script>
-
-
+    <script src="../../libs/calendar/main.min.js"></script>
+    <script src="../../libs/calendar/locales-all.min.js"></script>
+    <script>
+        
+    </script>
 </body>
 
 </html>

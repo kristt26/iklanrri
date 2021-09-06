@@ -44,6 +44,7 @@ class IklanModel extends Model
     public function order()
     {
         $result = $this->db->query("SELECT
+            `iklan`.`id`,
             `iklan`.`topik`,
             `iklan`.`waktu`,
             `iklan`.`tanggalmulai`,
@@ -77,7 +78,54 @@ class IklanModel extends Model
             LEFT JOIN `pembayaran` ON `iklan`.`id` = `pembayaran`.`iklanid`
             LEFT JOIN `layanan` ON `tarif`.`layananid` = `layanan`.`id`
         WHERE
-            pembayaran.status = 'Success'")->getResultArray();
+            pembayaran.status = 'Success' AND iklan.status='0'")->getResultArray();
+
+        foreach ($result as $key => $value) {
+            $result[$key]['waktu'] = unserialize($result[$key]['waktu']);
+            $iklanid = $value['iklanid'];
+            $result[$key]['jadwal'] = $this->db->query("SELECT * FROM jadwalsiaran WHERE iklanid = '$iklanid'")->getResultArray();
+        }
+        return $result;
+    }
+
+    public function iklanTayang()
+    {
+        $result = $this->db->query("SELECT
+            `iklan`.`id`,
+            `iklan`.`topik`,
+            `iklan`.`waktu`,
+            `iklan`.`tanggalmulai`,
+            `iklan`.`tanggalselesai`,
+            `iklan`.`jeniskontent`,
+            `iklan`.`kontent`,
+            `iklan`.`tarifid`,
+            `iklan`.`status`,
+            `iklan`.`tanggal`,
+            `iklan`.`userid`,
+            `pembayaran`.`orderid`,
+            `pembayaran`.`iklanid`,
+            `pembayaran`.`nominal`,
+            `pembayaran`.`status` AS `statusbayar`,
+            `tarif`.`kategori`,
+            `tarif`.`jenis`,
+            `tarif`.`uraian`,
+            `tarif`.`satuan`,
+            `tarif`.`tarif`,
+            `tarif`.`layananid`,
+            `user`.`username`,
+            `user`.`email`,
+            `user`.`alamat`,
+            `user`.`kontak`,
+            `user`.`fullname`,
+            `layanan`.`layanan`
+        FROM
+            `iklan`
+            LEFT JOIN `user` ON `iklan`.`userid` = `user`.`id`
+            LEFT JOIN `tarif` ON `tarif`.`id` = `iklan`.`tarifid`
+            LEFT JOIN `pembayaran` ON `iklan`.`id` = `pembayaran`.`iklanid`
+            LEFT JOIN `layanan` ON `tarif`.`layananid` = `layanan`.`id`
+        WHERE
+            pembayaran.status = 'Success' AND iklan.tanggalselesai > CURRENT_DATE()")->getResultArray();
 
         foreach ($result as $key => $value) {
             $result[$key]['waktu'] = unserialize($result[$key]['waktu']);
