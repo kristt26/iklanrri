@@ -63,7 +63,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr ng-repeat="item in data.spot.prime">
+                                    <tr ng-repeat="item in spotKomPrime">
                                         <td>{{$index+1}}</td>
                                         <td>{{item.uraian}}</td>
                                         <td>{{item.satuan}}</td>
@@ -84,7 +84,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr ng-repeat="item in data.spot.prime">
+                                    <tr ng-repeat="item spotKomReguler">
                                         <td>{{$index+1}}</td>
                                         <td>{{item.uraian}}</td>
                                         <td>{{item.satuan}}</td>
