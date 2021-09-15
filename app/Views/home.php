@@ -84,7 +84,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr ng-repeat="item spotKomReguler">
+                                    <tr ng-repeat="item in spotKomReguler">
                                         <td>{{$index+1}}</td>
                                         <td>{{item.uraian}}</td>
                                         <td>{{item.satuan}}</td>
