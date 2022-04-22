@@ -27,7 +27,7 @@ function homeController($scope, $http, helperServices, homeServices) {
         x.forEach(element => {
             lebel.push($scope.setBulan(element.stringbln));
             datas.push(element.jumlah);
-            color.push("#"+Math.floor(Math.random()*16777215).toString(16));
+            color.push("#" + Math.floor(Math.random() * 16777215).toString(16));
         });
         console.log(lebel);
         console.log(datas);
@@ -56,7 +56,7 @@ function homeController($scope, $http, helperServices, homeServices) {
                     y: {
                         beginAtZero: true
                     }
-                }, 
+                },
                 plugins: {
                     legend: {
                         display: false,
@@ -67,13 +67,13 @@ function homeController($scope, $http, helperServices, homeServices) {
                     title: {
                         display: true,
                         text: 'Pemasangan Iklan Tahun ' + new Date().getFullYear(),
-                      }
+                    }
                 }
             }
         });
     })
 
-    $scope.setBulan = (bulan)=>{
+    $scope.setBulan = (bulan) => {
         switch (parseInt(bulan)) {
             case 1:
                 return "Januari"
@@ -108,7 +108,7 @@ function homeController($scope, $http, helperServices, homeServices) {
             case 11:
                 return "November"
                 break;
-        
+
             default:
                 return "Desember"
                 break;
@@ -359,8 +359,8 @@ function pasangIklanController($scope, $http, helperServices, pasangIklanService
         var harga = {};
         var item = $scope.harga.filter(x => x.kategori == $scope.tarif.kategori && x.jenis == $scope.tarif.jenis);
         if (lamasiar > 100) {
-            harga = item.find(x=>x.uraian==">100 Kali" || x.uraian==">101 Kali");
-        }else{
+            harga = item.find(x => x.uraian == ">100 Kali" || x.uraian == ">101 Kali");
+        } else {
             item.forEach(element => {
                 var uraian = element.uraian.split(" Spot");
                 if (uraian.length > 1) {
@@ -520,15 +520,15 @@ function orderController($scope, $http, helperServices, orderServices, message, 
         return newArray;
     }
 
-    $scope.edit = (item)=>{
+    $scope.edit = (item) => {
         $scope.model = angular.copy(item);
         $("#editItem").modal("show");
     }
 
-    $scope.save = (item)=>{
-        message.dialog("Anda yakin ingin memproses Order Iklan??", "OK").then(x=>{
-            orderServices.put(item).then(res=>{
-                message.dialogmessage("Proses Berhasil").then(x=>{
+    $scope.save = (item) => {
+        message.dialog("Anda yakin ingin memproses Order Iklan??", "OK").then(x => {
+            orderServices.put(item).then(res => {
+                message.dialogmessage("Proses Berhasil").then(x => {
                     document.location.reload();
                 })
             })
@@ -676,10 +676,10 @@ function laporanIklanController($scope, helperServices, laporanServices, message
         var a = item.split(' - ');
         a[0] = new Date(a[0]);
         a[1] = new Date(a[1]);
-        if(a[0]!==a[1]){
-            $scope.model.awal = a[0].getFullYear() + '-' + (a[0].getMonth()+1) + '-' + a[0].getDate();
-            $scope.model.akhir = a[1].getFullYear() + '-' + (a[1].getMonth()+1) + '-' + a[1].getDate();
-            laporanServices.get($scope.model).then(x=>{
+        if (a[0] !== a[1]) {
+            $scope.model.awal = a[0].getFullYear() + '-' + (a[0].getMonth() + 1) + '-' + a[0].getDate();
+            $scope.model.akhir = a[1].getFullYear() + '-' + (a[1].getMonth() + 1) + '-' + a[1].getDate();
+            laporanServices.get($scope.model).then(x => {
                 $scope.datas = x;
                 $scope.total = 0;
                 x.forEach(element => {
@@ -701,7 +701,7 @@ function statusBayarController($scope, helperServices, statusBayarServices, mess
     $scope.spot = [];
     $scope.pengumuman = [];
     $scope.model = {};
-    statusBayarServices.get().then(res=>{
+    statusBayarServices.get().then(res => {
         $scope.datas = res;
     })
 }
@@ -769,8 +769,8 @@ function homeGuestController($scope, helperServices, homeGuestServices, message,
     $scope.model = {};
     homeGuestServices.get().then(res => {
         $scope.datas = res;
-        $scope.spot = $scope.datas.find(x=>x.layanan=='Spot Iklan');
-        $scope.pengumuman = $scope.datas.find(x=>x.layanan=='Pengumuman');
+        $scope.spot = $scope.datas.find(x => x.layanan == 'Spot Iklan');
+        $scope.pengumuman = $scope.datas.find(x => x.layanan == 'Pengumuman');
         console.log($scope.pengumuman);
         $scope.spotNonPrime = $scope.spot.kategori[0].dataKategori[0].data;
         $scope.spotNonReguler = $scope.spot.kategori[0].dataKategori[1].data;

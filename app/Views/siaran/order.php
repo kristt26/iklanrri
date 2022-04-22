@@ -165,7 +165,8 @@
                                 <div class="form-group row">
                                     <label for="periode" class="col-sm-4 col-form-label">Periode Siaran</label>
                                     <div class="col-sm-8">
-                                        <label for="periode" class="col-form-label">{{infoOrder.tanggalmulai}} s/d {{infoOrder.tanggalselesai}}</label>
+                                        <label for="periode" class="col-form-label">{{infoOrder.tanggalmulai}} s/d
+                                            {{infoOrder.tanggalselesai}}</label>
                                     </div>
                                 </div>
                                 <div class="form-group" ng-if="infoOrder.jeniskontent=='File'">
@@ -179,7 +180,8 @@
                                 <div class="form-group row" ng-if="infoOrder.jeniskontent=='Text'">
                                     <label for="kontenttext" class="col-sm-4 col-form-label">Periode Siaran</label>
                                     <div class="col-sm-8">
-                                        <textarea id="kontenttext" readonly class="form-control-plaintext" cols="5" ng-model="infoOrder.kontent"></textarea>
+                                        <textarea id="kontenttext" readonly class="form-control-plaintext" cols="5"
+                                            ng-model="infoOrder.kontent"></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -243,8 +245,7 @@
                     <div class="modal-body">
                         <div class="form-group">
                             <label for="kategori" class="col-form-label col-form-label-sm">Set Status</label>
-                            <select id="kategori" class="form-control form-control-sm" ng-model="model.status"
-                                required>
+                            <select id="kategori" class="form-control form-control-sm" ng-model="model.status" required>
                                 <option value="">---Pilih---</option>
                                 <option value="0">Tidak Aktif</option>
                                 <option value="1">Tayang</option>
